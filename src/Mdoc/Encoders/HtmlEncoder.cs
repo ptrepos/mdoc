@@ -208,15 +208,31 @@ namespace Mdoc.Encoders
         {
             Dictionary<HeadSection, string> contents = new Dictionary<HeadSection, string>();
 
-            int seq = 0;
-
+            HashSet<string> set = new HashSet<string>();
             foreach (Section section in sections)
             {
                 if (section is HeadSection)
                 {
                     HeadSection s = (HeadSection)section;
 
-                    contents.Add(s, GetString(s.Text));
+                    string text = GetString(s.Text);
+                    if (!set.Contains(text))
+                    {
+                        int sequence = 1;
+                        for (;;)
+                        {
+                            string name = text + "_" + sequence;
+                            if (!set.Contains(name))
+                            {
+                                text = name;
+                                break;
+                            }
+                            sequence++;
+                        }
+                    }
+                    set.Add(text);
+
+                    contents.Add(s, text);
                 }
             }
 
