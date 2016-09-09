@@ -21,8 +21,10 @@ namespace MdocConv
 
             using (StreamWriter writer = new StreamWriter(outputPath))
             {
+                writer.WriteLine("<!DOCTYPE html>");
                 writer.WriteLine("<html>");
                 writer.WriteLine("<head>");
+                writer.WriteLine("<meta charset=\"UTF-8\">");
                 writer.WriteLine("<title>{0}</title>", Path.GetFileNameWithoutExtension(mdocPath));
                 writer.WriteLine("<link href=\"style/doc.css\" rel=\"stylesheet\" type =\"text/css\" />");
                 writer.WriteLine("</head>");
