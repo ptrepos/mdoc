@@ -41,9 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Encoders\ContentsTableGenerator.cs" />
-    <Compile Include="Parsers\Mdoc.cs" />
     <Compile Include="Encoders\MarkdownEncoder.cs" />
     <Compile Include="Encoders\HtmlEncoder.cs" />
+    <Compile Include="Mdoc.cs" />
     <Compile Include="Parsers\LineParser.cs" />
     <Compile Include="Parsers\TextParser.cs" />
     <Compile Include="Section.cs" />

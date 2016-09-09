@@ -1,38 +1,96 @@
 body {
-	tab-size: 4;
 }
 
+/* headers */
 h1 {
+	font-size: 200%;
+	font-weight: bold;
 	border-bottom: solid 1px #D0D0D0;
 }
 
 h2 {
+	font-size: 120%;
+	font-weight: bold;
 	border-left: solid	10px #D0D0D0;
 	border-bottom: solid 1px #D0D0D0;
 	padding-left: 5px;
 }
 
 h3 {
+	font-size: 100%;
+	font-weight: bold;
 }
 
 h4 {
+	font-size: 100%;
+	font-weight: bold;
 	border-bottom: dashed 1px #D0D0D0;
+	margin-left: 1em;
 	padding: 0.25em;
 }
 
-pre {
-	white-space: pre;
-	background-color: #F0F0F0;
-	margin-left: 1em;
-	padding: 5px;
+h5 {
+	font-size: 90%;
+	font-weight: bold;
+	border-bottom: dashed 1px #D0D0D0;
+	margin-left: 3em;
+	padding: 0.25em;
 }
 
+h6 {
+	font-size: 80%;
+	font-weight: bold;
+	border-bottom: dashed 1px #D0D0D0;
+	margin-left: 6em;
+	padding: 0.25em;
+}
+
+/* list item */
+li.aster {
+	list-style-position: outside;
+	list-style-image: none;
+}
+
+li.plus {
+	list-style-position: outside;
+	list-style-image: url('plus.png');
+}
+
+li.hyphen {
+	list-style-position: outside;
+	list-style-image: url('hyphen.png');
+}
+
+/* table of contents */
+ul.table_of_contents
+{
+	list-style-type: none;
+}
+
+/* code list */
+pre.code {
+	margin-left: 3em;
+	padding: 1em;
+	background-color: #F0F0F0;
+	border: solid 1px #D0D0D0;
+}
+
+/* definition list */
 dl {
 	margin: 1em;
+}
+
+dl dt {
 }
 
 dl dd {
 	padding: 0.5em;
 	background-color: #F0F0F0;
-	font-size: 80%;
+}
+
+/* block quote */
+blockquote {
+	margin-left: 1em;
+	padding-left: 0.5em;
+	border-left: solid 8px #F0F0F0;
 }
