@@ -16,7 +16,9 @@ namespace Mdoc.Parsers
         ORDER_LIST_ITEM,
         DEFINITION_ITEM,
         CODE,
-        QUOTE
+        QUOTE,
+        CONTENTS,
+        CONTENTS_ALL
     }
 
     public class LineParser
@@ -84,6 +86,18 @@ namespace Mdoc.Parsers
                 case '*':
                     if (ParseListItem(line))
                     {
+                        return true;
+                    }
+                    break;
+                case '[':
+                    if (line.StartsWith("[:contents]"))
+                    {
+                        this.Type = LineType.CONTENTS;
+                        return true;
+                    }
+                    else if (line.StartsWith("[:contents-all]"))
+                    {
+                        this.Type = LineType.CONTENTS_ALL;
                         return true;
                     }
                     break;

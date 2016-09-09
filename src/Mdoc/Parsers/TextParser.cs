@@ -31,14 +31,15 @@ namespace Mdoc.Parsers
                 switch (text[i])
                 {
                     case '*':
-                        if (builder.Length > 0)
+                        if (Match(text, i + 1, '*'))
                         {
-                            elems.Add(new TextSpan(builder.ToString()));
-                            builder.Clear();
-                        }
+                            // **
+                            if (builder.Length > 0)
+                            {
+                                elems.Add(new TextSpan(builder.ToString()));
+                                builder.Clear();
+                            }
 
-                        if (i + 1 < text.Length && text[i + 1] == '*')
-                        {
                             if (!hardbold)
                             {
                                 elems.Add(new HardboldStartTag());
@@ -51,10 +52,16 @@ namespace Mdoc.Parsers
                             hardbold = !hardbold;
 
                             i += 2;
-                            continue;
                         }
                         else
                         {
+                            // *
+                            if (builder.Length > 0)
+                            {
+                                elems.Add(new TextSpan(builder.ToString()));
+                                builder.Clear();
+                            }
+
                             if (!bold)
                             {
                                 elems.Add(new BoldStartTag());
@@ -67,28 +74,39 @@ namespace Mdoc.Parsers
                             bold = !bold;
 
                             i += 1;
-                            continue;
                         }
-                    case '~':
-                        if (builder.Length > 0)
-                        {
-                            elems.Add(new TextSpan(builder.ToString()));
-                            builder.Clear();
-                        }
+                        break;
 
-                        if (!strikethrough)
+                    case '~':
+                        if (Match(text, i + 1, '~'))
                         {
-                            elems.Add(new StrikethroughStartTag());
+                            // ~~
+                            if (builder.Length > 0)
+                            {
+                                elems.Add(new TextSpan(builder.ToString()));
+                                builder.Clear();
+                            }
+
+                            if (!strikethrough)
+                            {
+                                elems.Add(new StrikethroughStartTag());
+                            }
+                            else
+                            {
+                                elems.Add(new StrikethroughEndTag());
+                            }
+
+                            strikethrough = !strikethrough;
+
+                            i += 2;
                         }
                         else
                         {
-                            elems.Add(new StrikethroughEndTag());
+                            builder.Append(text[i]);
+                            i += 1;
                         }
 
-                        strikethrough = !strikethrough;
-
-                        i += 1;
-                        continue;
+                        break;
                     case '`':
                         if (builder.Length > 0)
                         {
@@ -96,35 +114,16 @@ namespace Mdoc.Parsers
                             builder.Clear();
                         }
 
-                        i++;
-                        while (i < text.Length)
-                        {
-                            if (text[i] == '`')
-                            {
-                                elems.Add(new CodeSpan(builder.ToString()));
-                                builder.Clear();
-                                i += 1;
-                                break;
-                            }
-                            else if (text[i] == '\\')
-                            {
-                                if (i + 1 < text.Length)
-                                {
-                                    builder.Append(text[i + 1]);
-                                    i += 2;
-                                }
-                            }
-                            else
-                            {
-                                builder.Append(text[i]);
-                                i += 1;
-                            }
-                        }
+                        // `XXXXXXXXXXXXXXXXXXX`
+                        CodeSpan codeSpan = ParseCode(text, ref i);
+                        if (codeSpan != null)
+                            elems.Add(codeSpan);
 
-                        continue;
+                        break;
                     case '\\':
                         if (i + 1 < text.Length)
                         {
+                            // \?
                             builder.Append(text[i + 1]);
                             i += 2;
                         }
@@ -134,13 +133,35 @@ namespace Mdoc.Parsers
                             i += 1;
                         }
                         break;
-                    //case '[':
-                    //    if (text.Length > 0)
-                    //    {
-                    //        elems.Add(new TextSpan(text.ToString()));
-                    //        text.Clear();
-                    //    }
-                    //    break;
+                    case '[':
+                        if (Match(text, i + 1, '['))
+                        {
+                            // [[
+                            if (builder.Length > 0)
+                            {
+                                elems.Add(new TextSpan(builder.ToString()));
+                                builder.Clear();
+                            }
+
+                            HyperlinkTag tag = ParseHyperlinkAuto(text, ref i);
+                            if (tag != null)
+                                elems.Add(tag);
+                            continue;
+                        }
+                        else
+                        {
+                            // [
+                            if (builder.Length > 0)
+                            {
+                                elems.Add(new TextSpan(builder.ToString()));
+                                builder.Clear();
+                            }
+
+                            HyperlinkTag tag = ParseHyperlink(text, ref i);
+                            if (tag != null)
+                                elems.Add(tag);
+                        }
+                        break;
 
                     default:
                         builder.Append(text[i]);
@@ -163,6 +184,162 @@ namespace Mdoc.Parsers
                 elems.Add(new StrikethroughEndTag());
 
             return elems.ToArray();
+        }
+
+        private bool Match(string line, int index, char c)
+        {
+            if (index >= line.Length)
+            {
+                return false;
+            }
+            return line[index] == c;
+        }
+
+        CodeSpan ParseCode(string text, ref int index)
+        {
+            StringBuilder context = new StringBuilder();
+
+            if (Match(text, index, '`') == false)
+            {
+                throw new ApplicationException();
+            }
+            index++;
+
+            while (index < text.Length)
+            {
+                if (text[index] == '`')
+                {
+                    index += 1;
+                    return new CodeSpan(context.ToString());
+                }
+                else if (text[index] == '\\')
+                {
+                    if (index + 1 < text.Length)
+                    {
+                        context.Append(text[index + 1]);
+                        index += 2;
+                    }
+                }
+                else
+                {
+                    context.Append(text[index]);
+                    index += 1;
+                }
+            }
+
+            throw new ApplicationException();
+        }
+
+        HyperlinkTag ParseHyperlinkAuto(string text, ref int index)
+        {
+            StringBuilder context = new StringBuilder();
+            StringBuilder href = new StringBuilder();
+
+            if (Match(text, index, '[') == false ||
+                Match(text, index + 1, '[') == false)
+            {
+                throw new ApplicationException();
+            }
+            index += 2;
+
+            while (index < text.Length)
+            {
+                if (text[index] == ']')
+                {
+                    if (Match(text, index + 1, ']'))
+                    {
+                        string url = context.ToString();
+                        index += 2;
+                        return new HyperlinkTag(url, url, null);
+                    }
+                    else
+                    {
+                        index++;
+                    }
+                }
+                else if (text[index] == '\\')
+                {
+                    if (index + 1 < text.Length)
+                    {
+                        context.Append(text[index + 1]);
+                        index += 2;
+                    }
+                }
+                else
+                {
+                    context.Append(text[index]);
+                    index += 1;
+                }
+            }
+
+            throw new ApplicationException();
+        }
+
+        HyperlinkTag ParseHyperlink(string text, ref int index)
+        {
+            StringBuilder context = new StringBuilder();
+            StringBuilder href = new StringBuilder();
+
+            if (Match(text, index,'[') == false)
+            {
+                throw new ApplicationException();
+            }
+            index++;
+            
+            while (index < text.Length)
+            {
+                if (text[index] == ']')
+                {
+                    index++;
+
+                    if (Match(text, index, '('))
+                    {
+                        index++;
+
+                        while (index < text.Length)
+                        {
+                            if (text[index] == ')')
+                            {
+                                index++;
+
+                                return new HyperlinkTag(context.ToString(), href.ToString(), null);
+                            }
+                            else if (text[index] == '\\')
+                            {
+                                if (index + 1 < text.Length)
+                                {
+                                    href.Append(text[index + 1]);
+                                    index += 2;
+                                }
+                            }
+                            else
+                            {
+                                href.Append(text[index]);
+                                index++;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        throw new ApplicationException();
+                    }
+                }
+                else if (text[index] == '\\')
+                {
+                    if (index + 1 < text.Length)
+                    {
+                        context.Append(text[index + 1]);
+                        index += 2;
+                    }
+                }
+                else
+                {
+                    context.Append(text[index]);
+                    index++;
+                }
+            }
+
+            throw new ApplicationException();
         }
     }
 }

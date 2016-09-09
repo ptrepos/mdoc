@@ -52,6 +52,15 @@ namespace Mdoc.Parsers
                     case LineType.QUOTE:
                         sections.Add(ParseQuoteSection(1));
                         break;
+                    case LineType.CONTENTS:
+                        sections.Add(new ContentsSection());
+                        parser.Parse();
+                        break;
+                    case LineType.CONTENTS_ALL:
+                        sections.Add(new ContentsAllSection());
+                        parser.Parse();
+                        break;
+
                 }
             }
 

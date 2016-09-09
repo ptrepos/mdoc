@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Mdoc
+namespace Mdoc.Encoders
 {
     public class HtmlEncoder
     {
         public void Encode(TextWriter writer, Section[] sections)
         {
-            Dictionary<HeadSection,string> contsntsTable = CreateTableOfContents(sections);
+            Dictionary<HeadSection,string> headRefs = CreateTableOfContents(sections);
 
-            foreach (Section section in sections)
+            for (int i = 0; i < sections.Length; i++)
             {
+                Section section = sections[i];
+
                 if (section is ParagraphSection)
                 {
                     ParagraphSection s = (ParagraphSection)section;
@@ -24,12 +26,12 @@ namespace Mdoc
                 else if (section is HeadSection)
                 {
                     HeadSection s = (HeadSection)section;
-
+                    
+                    writer.Write("<a name=\"{0}\">", headRefs[s]);
                     writer.Write("<h{0}>", s.Level);
-                    writer.Write("<a name=\"{0}\">", contsntsTable[s]);
                     WriteText(writer, s.Text);
-                    writer.Write("</a>");
-                    writer.WriteLine("</h{0}>", s.Level);
+                    writer.Write("</h{0}>", s.Level);
+                    writer.WriteLine("</a>");
                 }
                 else if (section is HorizonSection)
                 {
@@ -41,7 +43,7 @@ namespace Mdoc
                 {
                     CodeSection s = (CodeSection)section;
 
-                    writer.Write("<pre><code>");
+                    writer.Write("<pre class=\"code\"><code>");
                     writer.Write(Escape(s.Text));
                     writer.WriteLine("</code></pre>");
                 }
@@ -58,11 +60,11 @@ namespace Mdoc
                     OrderListSection s = (OrderListSection)section;
 
                     writer.WriteLine("<ol>");
-                    foreach (ListItemSection i in s.Items)
+                    foreach (ListItemSection j in s.Items)
                     {
                         writer.Write("<li>");
-                        WriteText(writer, i.Text);
-                        Encode(writer, i.ChildList.ToArray());
+                        WriteText(writer, j.Text);
+                        Encode(writer, j.ChildList.ToArray());
                         writer.WriteLine("</li>");
                     }
                     writer.WriteLine("</ol>");
@@ -72,11 +74,11 @@ namespace Mdoc
                     ListSection s = (ListSection)section;
 
                     writer.WriteLine("<ul>");
-                    foreach (ListItemSection i in s.Items)
+                    foreach (ListItemSection j in s.Items)
                     {
-                        writer.Write(String.Format("<li {0}>", GetListClass(i.Mark)));
-                        WriteText(writer, i.Text);
-                        Encode(writer, i.ChildList.ToArray());
+                        writer.Write(String.Format("<li {0}>", GetListClass(j.Mark)));
+                        WriteText(writer, j.Text);
+                        Encode(writer, j.ChildList.ToArray());
                         writer.WriteLine("</li>");
                     }
                     writer.WriteLine("</ul>");
@@ -86,16 +88,52 @@ namespace Mdoc
                     DefinitionListSection s = (DefinitionListSection)section;
 
                     writer.Write("<dl>");
-                    foreach (DefinitionItemSection i in s.Items)
+                    foreach (DefinitionItemSection j in s.Items)
                     {
                         writer.Write("<dt>");
-                        WriteText(writer, i.Caption);
+                        WriteText(writer, j.Caption);
                         writer.WriteLine("</dt>");
                         writer.Write("<dd>");
-                        WriteText(writer, i.Data);
+                        WriteText(writer, j.Data);
                         writer.WriteLine("</dd>");
                     }
                     writer.WriteLine("</dl>");
+                }
+                else if (section is DefinitionListSection)
+                {
+                    DefinitionListSection s = (DefinitionListSection)section;
+
+                    writer.Write("<dl>");
+                    foreach (DefinitionItemSection j in s.Items)
+                    {
+                        writer.Write("<dt>");
+                        WriteText(writer, j.Caption);
+                        writer.WriteLine("</dt>");
+                        writer.Write("<dd>");
+                        WriteText(writer, j.Data);
+                        writer.WriteLine("</dd>");
+                    }
+                    writer.WriteLine("</dl>");
+                }
+                else if (section is ContentsSection)
+                {
+                    ContentsSection s = (ContentsSection)section;
+
+                    List<ContentItem> contents
+                        = ContentsTableGenerator.Generate(sections, i);
+
+                    WriteContents(writer, contents, headRefs);
+
+                }
+                else if (section is ContentsAllSection)
+                {
+                    ContentsAllSection s = (ContentsAllSection)section;
+
+                    List<ContentItem> contents
+                        = ContentsTableGenerator.GenerateAll(sections);
+
+                    WriteContents(writer, contents, headRefs);
+
                 }
             }
         }
@@ -140,7 +178,76 @@ namespace Mdoc
                 {
                     writer.Write("</strike>");
                 }
+                else if (i is HyperlinkTag)
+                {
+                    HyperlinkTag s = (HyperlinkTag)i;
+                    writer.Write("<a href=\"{1}\">{0}</a>", Escape(s.Text), Escape(s.Href));
+                }
             }
+        }
+
+        private void WriteContents(TextWriter writer, List<ContentItem> contents, Dictionary<HeadSection,string> headRefs)
+        {
+            writer.WriteLine("<ul class=\"table_of_contents\">");
+            foreach (ContentItem i in contents)
+            {
+                writer.Write("<li>");
+                if (i.Head != null)
+                {
+                    writer.Write("<a href=\"#{0}\">", headRefs[i.Head]);
+                    WriteText(writer, i.Head.Text);
+                    writer.Write("</a>");
+                }
+                WriteContents(writer, i.Items, headRefs);
+                writer.WriteLine("</li>");
+            }
+            writer.WriteLine("</ul>");
+        }
+
+        private Dictionary<HeadSection, string> CreateTableOfContents(Section[] sections)
+        {
+            Dictionary<HeadSection, string> contents = new Dictionary<HeadSection, string>();
+
+            int seq = 0;
+
+            foreach (Section section in sections)
+            {
+                if (section is HeadSection)
+                {
+                    HeadSection s = (HeadSection)section;
+
+                    contents.Add(s, GetString(s.Text));
+                }
+            }
+
+            return contents;
+        }
+
+        private string GetString(TextElement[] texts)
+        {
+            StringBuilder builder = new StringBuilder();
+
+            foreach (TextElement i in texts)
+            {
+                if (i is TextSpan)
+                {
+                    TextSpan s = (TextSpan)i;
+
+                    builder.Append(Escape(s.Text));
+                }
+                else if (i is CodeSpan)
+                {
+                    CodeSpan s = (CodeSpan)i;
+
+                    builder.Append(Escape(s.Text));
+                }
+                else if (i is HyperlinkTag)
+                {
+                    HyperlinkTag s = (HyperlinkTag)i;
+                    builder.Append(Escape(s.Text));
+                }
+            }
+            return builder.ToString();
         }
 
         private string Escape(string text)
@@ -164,23 +271,5 @@ namespace Mdoc
             return null;
         }
 
-        private Dictionary<HeadSection, string> CreateTableOfContents(Section[] sections)
-        {
-            Dictionary<HeadSection, string> contents = new Dictionary<HeadSection, string>();
-
-            int seq = 0;
-
-            foreach (Section section in sections)
-            {
-                if (section is HeadSection)
-                {
-                    HeadSection s = (HeadSection)section;
-
-                    contents.Add(s, "head" + seq++);
-                }
-            }
-
-            return contents;
-        }
     }
 }

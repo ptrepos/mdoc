@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6348EF5F-E8A7-48BE-B351-62D864F843E7}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{C27B6D88-30DB-465D-AF8F-D3D8A35649B1}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mdoc</RootNamespace>
-    <AssemblyName>Mdoc</AssemblyName>
+    <RootNamespace>MdocConv</RootNamespace>
+    <AssemblyName>MdocConv</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -40,15 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Encoders\ContentsTableGenerator.cs" />
-    <Compile Include="Parsers\Mdoc.cs" />
-    <Compile Include="Encoders\MarkdownEncoder.cs" />
-    <Compile Include="Encoders\HtmlEncoder.cs" />
-    <Compile Include="Parsers\LineParser.cs" />
-    <Compile Include="Parsers\TextParser.cs" />
-    <Compile Include="Section.cs" />
-    <Compile Include="Parsers\SectionParser.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mdoc\Mdoc.csproj">
+      <Project>{6348ef5f-e8a7-48be-b351-62d864f843e7}</Project>
+      <Name>Mdoc</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

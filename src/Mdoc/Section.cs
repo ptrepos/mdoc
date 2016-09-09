@@ -109,6 +109,14 @@ namespace Mdoc
         }
     }
 
+    public class ContentsSection : Section
+    {
+    }
+
+    public class ContentsAllSection : Section
+    {
+    }
+
     public class TextElement
     {
     }

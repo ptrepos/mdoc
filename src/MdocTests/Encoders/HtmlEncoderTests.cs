@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Mdoc;
 using Mdoc.Parsers;
+using Mdoc.Encoders;
 using System;
 using System.IO;
 
@@ -91,7 +92,7 @@ CONTEXT1 CONTEXT1 CONTEXT1
             }
 
         }
-
+        
         [TestMethod()]
         public void Encode3Test()
         {
@@ -108,7 +109,6 @@ CONTEXT1 CONTEXT1 CONTEXT1
                 HtmlEncoder encoder = new HtmlEncoder();
                 encoder.Encode(writer, sections);
             }
-
         }
     }
 }

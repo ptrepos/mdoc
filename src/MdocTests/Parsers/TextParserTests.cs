@@ -15,7 +15,7 @@ namespace Mdoc.Parsers.Tests
         [TestMethod()]
         public void ParseTest()
         {
-            string text = @"*AAAAAA* **BBBBB**~BBBBB~";
+            string text = @"*AAAAAA* **BBBBB**~~BBBBB~~";
 
             TextParser parser = new TextParser(text);
             TextElement[] elems = parser.Parse();
