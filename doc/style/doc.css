@@ -11,20 +11,20 @@ h1 {
 h2 {
 	font-size: 120%;
 	font-weight: bold;
-	border-left: solid	10px #D0D0D0;
 	border-bottom: solid 1px #D0D0D0;
-	padding-left: 5px;
+	padding: 0.25em;
 }
 
 h3 {
 	font-size: 100%;
 	font-weight: bold;
+	padding: 0.25em;
 }
 
 h4 {
 	font-size: 100%;
 	font-weight: bold;
-	border-bottom: dashed 1px #D0D0D0;
+	border-bottom: solid 1px #D0D0D0;
 	margin-left: 1em;
 	padding: 0.25em;
 }
@@ -32,7 +32,6 @@ h4 {
 h5 {
 	font-size: 90%;
 	font-weight: bold;
-	border-bottom: dashed 1px #D0D0D0;
 	margin-left: 3em;
 	padding: 0.25em;
 }
@@ -40,9 +39,17 @@ h5 {
 h6 {
 	font-size: 80%;
 	font-weight: bold;
-	border-bottom: dashed 1px #D0D0D0;
 	margin-left: 6em;
 	padding: 0.25em;
+}
+
+p, ul, ol, blockquote {
+	margin-left: 3em;
+	margin-right: 2em;
+}
+
+ul ul, ol ul, ul ol, ol ol {
+	margin-left: 0em;
 }
 
 /* list item */
@@ -69,7 +76,7 @@ ul.table_of_contents
 
 /* code list */
 pre.code {
-	margin-left: 3em;
+	margin-left: 6em;
 	padding: 1em;
 	background-color: #F0F0F0;
 	border: solid 1px #D0D0D0;
