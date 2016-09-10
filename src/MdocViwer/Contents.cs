@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Threading.Tasks;
 
-namespace MdocViwer
+namespace MdocViewer
 {
     public class Contents
     {

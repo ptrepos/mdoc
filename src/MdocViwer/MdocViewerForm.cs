@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Mdoc;
 
-namespace MdocViwer
+namespace MdocViewer
 {
-    public partial class MdocViwerForm : Form
+    public partial class MdocViewerForm : Form
     {
         private string mdocFile;
 
-        public MdocViwerForm()
+        public MdocViewerForm()
         {
             InitializeComponent();
         }
@@ -25,12 +25,12 @@ namespace MdocViwer
             set { browser.DocumentText = value; }
         }
 
-        private void MdocViwerForm_Load(object sender, EventArgs e)
+        private void MdocViewerForm_Load(object sender, EventArgs e)
         {
             SetFormMode();
         }
 
-        private void MdocViwerForm_DragEnter(object sender, DragEventArgs e)
+        private void MdocViewerForm_DragEnter(object sender, DragEventArgs e)
         {
             string[] files = e.Data.GetFormats();
 
@@ -49,7 +49,7 @@ namespace MdocViwer
             }
         }
 
-        private void MdocViwerForm_DragDrop(object sender, DragEventArgs e)
+        private void MdocViewerForm_DragDrop(object sender, DragEventArgs e)
         {
             object obj = e.Data.GetData("FileNameW");
             if (obj == null)

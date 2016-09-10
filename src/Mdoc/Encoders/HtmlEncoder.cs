@@ -9,6 +9,13 @@ namespace Mdoc.Encoders
     {
         public void Encode(TextWriter writer, Section[] sections)
         {
+            writer.WriteLine("<div class=\"mdoc\">");
+            EncodeInternal(writer, sections);
+            writer.WriteLine("</div>");
+        }
+
+        private void EncodeInternal(TextWriter writer, Section[] sections)
+        {
             Dictionary<HeadSection,string> headRefs = CreateTableOfContents(sections);
 
             for (int i = 0; i < sections.Length; i++)
@@ -52,7 +59,7 @@ namespace Mdoc.Encoders
                     QuoteSection s = (QuoteSection)section;
 
                     writer.Write("<blockquote>");
-                    Encode(writer, s.Texts);
+                    EncodeInternal(writer, s.Texts);
                     writer.WriteLine("</blockquote>");
                 }
                 else if (section is OrderListSection)
@@ -64,7 +71,7 @@ namespace Mdoc.Encoders
                     {
                         writer.Write("<li>");
                         WriteText(writer, j.Text);
-                        Encode(writer, j.ChildList.ToArray());
+                        EncodeInternal(writer, j.ChildList.ToArray());
                         writer.WriteLine("</li>");
                     }
                     writer.WriteLine("</ol>");
@@ -78,7 +85,7 @@ namespace Mdoc.Encoders
                     {
                         writer.Write(String.Format("<li {0}>", GetListClass(j.Mark)));
                         WriteText(writer, j.Text);
-                        Encode(writer, j.ChildList.ToArray());
+                        EncodeInternal(writer, j.ChildList.ToArray());
                         writer.WriteLine("</li>");
                     }
                     writer.WriteLine("</ul>");

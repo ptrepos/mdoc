@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MdocViwer
+namespace MdocViewer
 {
     static class Program
     {
@@ -17,7 +17,7 @@ namespace MdocViwer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            MdocViwerForm form = new MdocViwerForm();
+            MdocViewerForm form = new MdocViewerForm();
             if (args.Length > 0)
             {
                 form.LoadMdocFile(args[0]);

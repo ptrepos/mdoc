@@ -1,6 +1,6 @@
-﻿namespace MdocViwer
+﻿namespace MdocViewer
 {
-    partial class MdocViwerForm
+    partial class MdocViewerForm
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -112,7 +112,7 @@
             this.helpItem.Size = new System.Drawing.Size(48, 20);
             this.helpItem.Text = "ヘルプ";
             // 
-            // MdocViwerForm
+            // MdocViewerForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -122,10 +122,10 @@
             this.Controls.Add(this.browser);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "MdocViwerForm";
-            this.Load += new System.EventHandler(this.MdocViwerForm_Load);
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MdocViwerForm_DragDrop);
-            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MdocViwerForm_DragEnter);
+            this.Name = "MdocViewerForm";
+            this.Load += new System.EventHandler(this.MdocViewerForm_Load);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MdocViewerForm_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MdocViewerForm_DragEnter);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
