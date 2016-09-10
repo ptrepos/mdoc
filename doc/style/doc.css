@@ -4,13 +4,13 @@ body {
 /* headers */
 h1 {
 	font-size: 200%;
-	font-weight: none;
+	font-weight: bold;
 	border-bottom: solid 1px #D0D0D0;
 }
 
 h2 {
 	font-size: 120%;
-	font-weight: none;
+	font-weight: normal;
 	border-bottom: solid 1px #D0D0D0;
 	padding: 0.25em;
 }
@@ -23,7 +23,7 @@ h3 {
 
 h4 {
 	font-size: 100%;
-	font-weight: bold;
+	font-weight: normal;
 	border-bottom: solid 1px #D0D0D0;
 	margin-left: 1em;
 	padding: 0.25em;
@@ -31,7 +31,7 @@ h4 {
 
 h5 {
 	font-size: 90%;
-	font-weight: bold;
+	font-weight: normal;
 	border-bottom: solid 1px #D0D0D0;
 	margin-left: 3em;
 	padding: 0.25em;
@@ -39,17 +39,26 @@ h5 {
 
 h6 {
 	font-size: 80%;
-	font-weight: bold;
+	font-weight: normal;
 	border-bottom: solid 1px #D0D0D0;
 	margin-left: 6em;
 	padding: 0.25em;
 }
 
-p, ul, ol {
+p {
 	margin-left: 3em;
 	margin-right: 2em;
 }
 
+ul, ol {
+	margin-left: 4em;
+	margin-right: 2em;
+}
+
+
+ul ul, ol ul, ul ol, ol ol {
+	margin-left: 2em;
+}
 
 /* list item */
 li.aster {
@@ -84,6 +93,7 @@ pre.code {
 /* definition list */
 dl {
 	margin: 1em;
+	margin-left: 3em;
 }
 
 dl dt {
