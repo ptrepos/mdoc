@@ -45,11 +45,20 @@ h6 {
 	padding: 0.25em;
 }
 
-p, ul, ol {
+p {
 	margin-left: 3em;
 	margin-right: 2em;
 }
 
+ul, ol {
+	margin-left: 4em;
+	margin-right: 2em;
+}
+
+
+ul ul, ol ul, ul ol, ol ol {
+	margin-left: 2em;
+}
 
 /* list item */
 li.aster {
@@ -84,6 +93,7 @@ pre.code {
 /* definition list */
 dl {
 	margin: 1em;
+	margin-left: 3em;
 }
 
 dl dt {

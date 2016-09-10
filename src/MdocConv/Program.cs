@@ -20,7 +20,7 @@ namespace MdocConv
             string mdocPath = inputFile;
             string outputPath = Path.Combine(outputDir, outputFile);
 
-            Section[] sections = Mdoc.Mdoc.Parse(mdocPath);
+            Section[] sections = Mdoc.MdocTool.Parse(mdocPath);
 
             if (type == HTML_TYPE)
             {

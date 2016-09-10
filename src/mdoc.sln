@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MdocTests", "MdocTests\Mdoc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MdocConv", "MdocConv\MdocConv.csproj", "{C27B6D88-30DB-465D-AF8F-D3D8A35649B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MdocViwer", "MdocViwer\MdocViwer.csproj", "{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{C27B6D88-30DB-465D-AF8F-D3D8A35649B1}.Release|x64.Build.0 = Release|Any CPU
 		{C27B6D88-30DB-465D-AF8F-D3D8A35649B1}.Release|x86.ActiveCfg = Release|Any CPU
 		{C27B6D88-30DB-465D-AF8F-D3D8A35649B1}.Release|x86.Build.0 = Release|Any CPU
+		{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}.Debug|x64.Build.0 = Debug|Any CPU
+		{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}.Debug|x86.Build.0 = Debug|Any CPU
+		{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}.Release|x64.ActiveCfg = Release|Any CPU
+		{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}.Release|x64.Build.0 = Release|Any CPU
+		{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}.Release|x86.ActiveCfg = Release|Any CPU
+		{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
