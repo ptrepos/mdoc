@@ -45,7 +45,7 @@ h6 {
 	padding: 0.25em;
 }
 
-p, ul, ol, blockquote {
+p, ul, ol {
 	margin-left: 3em;
 	margin-right: 2em;
 }
@@ -99,7 +99,20 @@ dl dd {
 
 /* block quote */
 blockquote {
-	margin-left: 1em;
-	padding-left: 0.5em;
+	margin-left: 3em;
 	border-left: solid 8px #F0F0F0;
+}
+
+blockquote p {
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+}
+
+blockquote blockquote {
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+	margin-left: 2em;
+	margin-right: 0.5em;
 }
