@@ -111,10 +111,26 @@ namespace Mdoc
 
     public class ContentsSection : Section
     {
+        public int LevelLower;
+        public int LevelUpper;
+
+        public ContentsSection(int levelLower, int levelUpper)
+        {
+            this.LevelLower = levelLower;
+            this.LevelUpper = levelUpper;
+        }
     }
 
     public class ContentsAllSection : Section
     {
+        public int LevelLower;
+        public int LevelUpper;
+
+        public ContentsAllSection(int levelLower, int levelUpper)
+        {
+            this.LevelLower = levelLower;
+            this.LevelUpper = levelUpper;
+        }
     }
 
     public class TextElement

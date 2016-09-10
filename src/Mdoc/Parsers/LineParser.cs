@@ -30,6 +30,8 @@ namespace Mdoc.Parsers
         public string Text;
         public int Level;
         public char Mark;
+        public int LevelLower;
+        public int LevelUpper;
 
         public LineParser(TextReader reader)
         {
@@ -43,6 +45,8 @@ namespace Mdoc.Parsers
             this.Type = LineType.EOF;
             this.Text = null;
             this.Level = 0;
+            this.LevelLower = 0;
+            this.LevelUpper = 0;
             this.Mark = '\0';
 
             string line = reader.ReadLine();
@@ -90,14 +94,12 @@ namespace Mdoc.Parsers
                     }
                     break;
                 case '[':
-                    if (line.StartsWith("[:contents]"))
+                    if (ParseContents(line))
                     {
-                        this.Type = LineType.CONTENTS;
                         return true;
                     }
-                    else if (line.StartsWith("[:contents-all]"))
+                    else if (ParseContentsAll (line))
                     {
-                        this.Type = LineType.CONTENTS_ALL;
                         return true;
                     }
                     break;
@@ -173,7 +175,7 @@ namespace Mdoc.Parsers
 
             return true;
         }
-        
+
         private bool ParseHorizon(string line)
         {
             int count = 0;
@@ -312,6 +314,121 @@ namespace Mdoc.Parsers
             this.Text = line.Substring(i);
 
             return true;
+        }
+
+        private bool ParseContents(string line)
+        {
+            if (!line.StartsWith("[:contents:"))
+            {
+                return false;
+            }
+            int i = "[:contents:".Length;
+
+            StringBuilder levelLower = new StringBuilder();
+            StringBuilder levelUpper = new StringBuilder();
+            while (i < line.Length)
+            {
+                if ('0' <= line[i] && line[i] <= '9')
+                {
+                    levelLower.Append(line[i]);
+                    i++;
+                }
+                else if (line[i] == '-')
+                {
+                    if (levelLower.Length <= 0)
+                    {
+                        throw new ApplicationException("Syntax error [:contents:N-M]");
+                    }
+                    i++;
+
+                    while (i < line.Length)
+                    {
+                        if ('0' <= line[i] && line[i] <= '9')
+                        {
+                            levelUpper.Append(line[i]);
+                            i++;
+                        }
+                        else if (line[i] == ']')
+                        {
+                            i++;
+                            if (i >= line.Length)
+                            {
+                                if (levelUpper.Length <= 0)
+                                {
+                                    throw new ApplicationException("Syntax error [:contents:N-M]");
+                                }
+
+                                this.Type = LineType.CONTENTS;
+                                this.LevelLower = int.Parse(levelLower.ToString());
+                                this.LevelUpper = int.Parse(levelUpper.ToString());
+
+                                return true;
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+
+            throw new ApplicationException("Syntax error [:contents:N-M]");
+        }
+        private bool ParseContentsAll(string line)
+        {
+            if (!line.StartsWith("[:contents-all:"))
+            {
+                return false;
+            }
+            int i = "[:contents-all:".Length;
+
+            StringBuilder levelLower = new StringBuilder();
+            StringBuilder levelUpper = new StringBuilder();
+            while (i < line.Length)
+            {
+                if ('0' <= line[i] && line[i] <= '9')
+                {
+                    levelLower.Append(line[i]);
+                    i++;
+                }
+                else if (line[i] == '-')
+                {
+                    if (levelLower.Length <= 0)
+                    {
+                        throw new ApplicationException("Syntax error [:contents:N-M]");
+                    }
+                    i++;
+
+                    while (i < line.Length)
+                    {
+                        if ('0' <= line[i] && line[i] <= '9')
+                        {
+                            levelUpper.Append(line[i]);
+                            i++;
+                        }
+                        else if (line[i] == ']')
+                        {
+                            i++;
+                            if (i >= line.Length)
+                            {
+                                if (levelUpper.Length <= 0)
+                                {
+                                    throw new ApplicationException("Syntax error [:contents:N-M]");
+                                }
+
+                                this.Type = LineType.CONTENTS_ALL;
+                                this.LevelLower = int.Parse(levelLower.ToString());
+                                this.LevelUpper = int.Parse(levelUpper.ToString());
+
+                                return true;
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+
+            throw new ApplicationException("Syntax error [:contents:N-M]");
         }
 
         private int CountIndent(string line, ref int index)

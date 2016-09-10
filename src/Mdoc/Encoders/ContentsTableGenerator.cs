@@ -19,7 +19,7 @@ namespace Mdoc.Encoders
 
     public class ContentsTableGenerator
     {
-        public static List<ContentItem> Generate(Section[] sections, int index)
+        public static List<ContentItem> Generate(Section[] sections, int index, int levelLower, int levelUpper)
         {
             int headLevel = 0;
             for (int i = index; i > 0; i--)
@@ -31,15 +31,15 @@ namespace Mdoc.Encoders
                     break;
                 }
             }
-            return Generate(sections, index, headLevel);
+            return Generate(sections, index, headLevel, levelLower, levelUpper);
         }
 
-        public static List<ContentItem> GenerateAll(Section[] sections)
+        public static List<ContentItem> GenerateAll(Section[] sections, int levelLower, int levelUpper)
         {
-            return Generate(sections, 0, 0);
+            return Generate(sections, 0, 0, levelLower, levelUpper);
         }
 
-        public static List<ContentItem> Generate(Section[] sections, int index, int headLevel)
+        public static List<ContentItem> Generate(Section[] sections, int index, int headLevel, int levelLower, int levelUpper)
         {
             List<ContentItem> items = new List<ContentItem>();
 
@@ -54,6 +54,9 @@ namespace Mdoc.Encoders
                     }
                     else
                     {
+                        if (s.Level < levelLower || levelUpper < s.Level)
+                            continue;
+
                         int depth = s.Level - headLevel;
 
                         List<ContentItem> current = items;

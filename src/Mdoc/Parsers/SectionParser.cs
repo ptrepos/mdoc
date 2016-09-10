@@ -53,14 +53,13 @@ namespace Mdoc.Parsers
                         sections.Add(ParseQuoteSection(1));
                         break;
                     case LineType.CONTENTS:
-                        sections.Add(new ContentsSection());
+                        sections.Add(new ContentsSection(parser.LevelLower, parser.LevelUpper));
                         parser.Parse();
                         break;
                     case LineType.CONTENTS_ALL:
-                        sections.Add(new ContentsAllSection());
+                        sections.Add(new ContentsAllSection(parser.LevelLower, parser.LevelUpper));
                         parser.Parse();
                         break;
-
                 }
             }
 

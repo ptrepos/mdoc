@@ -120,7 +120,7 @@ namespace Mdoc.Encoders
                     ContentsSection s = (ContentsSection)section;
 
                     List<ContentItem> contents
-                        = ContentsTableGenerator.Generate(sections, i);
+                        = ContentsTableGenerator.Generate(sections, i, s.LevelLower, s.LevelUpper);
 
                     WriteContents(writer, contents, headRefs);
 
@@ -130,7 +130,7 @@ namespace Mdoc.Encoders
                     ContentsAllSection s = (ContentsAllSection)section;
 
                     List<ContentItem> contents
-                        = ContentsTableGenerator.GenerateAll(sections);
+                        = ContentsTableGenerator.GenerateAll(sections, s.LevelLower, s.LevelUpper);
 
                     WriteContents(writer, contents, headRefs);
 
@@ -216,7 +216,7 @@ namespace Mdoc.Encoders
                     HeadSection s = (HeadSection)section;
 
                     string text = GetString(s.Text);
-                    if (!set.Contains(text))
+                    if (set.Contains(text))
                     {
                         int sequence = 1;
                         for (;;)
