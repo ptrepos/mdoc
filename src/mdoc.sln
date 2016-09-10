@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MdocTests", "MdocTests\Mdoc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MdocConv", "MdocConv\MdocConv.csproj", "{C27B6D88-30DB-465D-AF8F-D3D8A35649B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MdocViwer", "MdocViwer\MdocViwer.csproj", "{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MdocViewer", "MdocViwer\MdocViewer.csproj", "{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
