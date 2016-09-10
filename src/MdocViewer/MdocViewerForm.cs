@@ -108,15 +108,19 @@ namespace MdocViewer
             using (StreamReader reader = new StreamReader(fileName, Encoding.UTF8))
             {
                 StringWriter writer = new StringWriter();
+                StringWriter messageWriter = new StringWriter();
 
                 MdocTool.EncodeHtml(
                     writer,
                     reader,
+                    messageWriter,
                     Path.GetFileNameWithoutExtension(fileName),
                     Contents.GetCssPath());
 
                 mdocFile = fileName;
                 browser.DocumentText = writer.ToString();
+
+                messageBox.Text = messageWriter.ToString();
             }
         }
 

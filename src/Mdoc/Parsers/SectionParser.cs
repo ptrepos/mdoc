@@ -8,62 +8,89 @@ namespace Mdoc.Parsers
     public class SectionParser
     {
         private LineParser parser;
+        private TextWriter messageWriter = null;
 
         public SectionParser(TextReader reader)
         {
-            parser = new LineParser(reader);
+            this.parser = new LineParser(reader);
+        }
+
+        public TextWriter MessageWriter
+        {
+            get { return messageWriter; }
+            set { messageWriter = value; }
         }
 
         public Section[] Parse()
         {
             List<Section> sections = new List<Section>();
 
-            parser.Parse();
+            try
+            {
+                parser.Parse();
+            }
+            catch (Exception ex)
+            {
+                WriteMessage(ex.Message);
+            }
 
             while (parser.Type != LineType.EOF) {
-                switch (parser.Type)
+                try
                 {
-                    case LineType.EMPTY:
-                        parser.Parse();
-                        continue;
-                    case LineType.TEXT:
-                        sections.Add(ParseParagraph());
-                        break;
-                    case LineType.HEAD:
-                        sections.Add(new HeadSection(ParseText(parser.Text), parser.Level));
-                        parser.Parse();
-                        break;
-                    case LineType.HORIZON:
-                        sections.Add(new HorizonSection());
-                        parser.Parse();
-                        break;
-                    case LineType.LIST_ITEM:
-                        sections.Add(ParseListSection(1));
-                        break;
-                    case LineType.ORDER_LIST_ITEM:
-                        sections.Add(ParseOrderListSection(1));
-                        break;
-                    case LineType.DEFINITION_ITEM:
-                        sections.Add(ParseDefinitionListSection());
-                        break;
-                    case LineType.CODE:
-                        sections.Add(ParseCodeSection());
-                        break;
-                    case LineType.QUOTE:
-                        sections.Add(ParseQuoteSection(1));
-                        break;
-                    case LineType.CONTENTS:
-                        sections.Add(new ContentsSection(parser.LevelLower, parser.LevelUpper));
-                        parser.Parse();
-                        break;
-                    case LineType.CONTENTS_ALL:
-                        sections.Add(new ContentsAllSection(parser.LevelLower, parser.LevelUpper));
-                        parser.Parse();
-                        break;
+                    switch (parser.Type)
+                    {
+                        case LineType.EMPTY:
+                            parser.Parse();
+                            continue;
+                        case LineType.TEXT:
+                            sections.Add(ParseParagraph());
+                            break;
+                        case LineType.HEAD:
+                            sections.Add(new HeadSection(ParseText(parser.Text), parser.Level));
+                            parser.Parse();
+                            break;
+                        case LineType.HORIZON:
+                            sections.Add(new HorizonSection());
+                            parser.Parse();
+                            break;
+                        case LineType.LIST_ITEM:
+                            sections.Add(ParseListSection(1));
+                            break;
+                        case LineType.ORDER_LIST_ITEM:
+                            sections.Add(ParseOrderListSection(1));
+                            break;
+                        case LineType.DEFINITION_ITEM:
+                            sections.Add(ParseDefinitionListSection());
+                            break;
+                        case LineType.CODE:
+                            sections.Add(ParseCodeSection());
+                            break;
+                        case LineType.QUOTE:
+                            sections.Add(ParseQuoteSection(1));
+                            break;
+                        case LineType.CONTENTS:
+                            sections.Add(new ContentsSection(parser.LevelLower, parser.LevelUpper));
+                            parser.Parse();
+                            break;
+                        case LineType.CONTENTS_ALL:
+                            sections.Add(new ContentsAllSection(parser.LevelLower, parser.LevelUpper));
+                            parser.Parse();
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    WriteMessage(ex.Message);
                 }
             }
 
             return sections.ToArray();
+        }
+
+        private void WriteMessage(string message)
+        {
+            if(messageWriter != null)
+                messageWriter.WriteLine(message);
         }
 
         private ParagraphSection ParseParagraph()

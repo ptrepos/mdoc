@@ -1,4 +1,6 @@
-body {
+.mdoc {
+	margin: 2em auto 2em auto;
+	width: 800px;
 }
 
 /* headers */
@@ -53,11 +55,14 @@ p {
 ul, ol {
 	margin-left: 4em;
 	margin-right: 2em;
+	padding: 0em;
 }
 
 
 ul ul, ol ul, ul ol, ol ol {
-	margin-left: 2em;
+	margin: 0.25em;
+	margin-left: 3em;
+	padding: 0em;
 }
 
 /* list item */

@@ -45,6 +45,7 @@
     <Compile Include="Encoders\HtmlEncoder.cs" />
     <Compile Include="MdocTool.cs" />
     <Compile Include="Parsers\LineParser.cs" />
+    <Compile Include="Parsers\MdocParseException.cs" />
     <Compile Include="Parsers\TextParser.cs" />
     <Compile Include="Section.cs" />
     <Compile Include="Parsers\SectionParser.cs" />

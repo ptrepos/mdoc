@@ -33,6 +33,8 @@ namespace Mdoc.Parsers
         public int LevelLower;
         public int LevelUpper;
 
+        private int lineCount = 0;
+
         public LineParser(TextReader reader)
         {
             this.reader = reader;
@@ -55,6 +57,7 @@ namespace Mdoc.Parsers
                 this.Type = LineType.EOF;
                 return false;
             }
+            lineCount++;
 
             // EMPTY LINE
             if (line.Length <= 0)
@@ -337,7 +340,7 @@ namespace Mdoc.Parsers
                 {
                     if (levelLower.Length <= 0)
                     {
-                        throw new ApplicationException("Syntax error [:contents:N-M]");
+                        throw new MdocParseException("block element error: [:contents:N-M]", lineCount);
                     }
                     i++;
 
@@ -355,7 +358,7 @@ namespace Mdoc.Parsers
                             {
                                 if (levelUpper.Length <= 0)
                                 {
-                                    throw new ApplicationException("Syntax error [:contents:N-M]");
+                                    throw new MdocParseException("block element error: [:contents:N-M]", lineCount);
                                 }
 
                                 this.Type = LineType.CONTENTS;
@@ -366,12 +369,20 @@ namespace Mdoc.Parsers
                             }
                             break;
                         }
+                        else
+                        {
+                            throw new MdocParseException("block element error: [:contents:N-M]", lineCount);
+                        }
                     }
                     break;
                 }
+                else
+                {
+                    throw new MdocParseException("block element error: [:contents:N-M]", lineCount);
+                }
             }
 
-            throw new ApplicationException("Syntax error [:contents:N-M]");
+            throw new MdocParseException("block element error: [:contents:N-M]", lineCount);
         }
         private bool ParseContentsAll(string line)
         {
@@ -394,7 +405,7 @@ namespace Mdoc.Parsers
                 {
                     if (levelLower.Length <= 0)
                     {
-                        throw new ApplicationException("Syntax error [:contents:N-M]");
+                        throw new MdocParseException("block element error: [:contents-all:N-M]", lineCount);
                     }
                     i++;
 
@@ -412,7 +423,7 @@ namespace Mdoc.Parsers
                             {
                                 if (levelUpper.Length <= 0)
                                 {
-                                    throw new ApplicationException("Syntax error [:contents:N-M]");
+                                    throw new MdocParseException("block element error: [:contents-all:N-M]", lineCount);
                                 }
 
                                 this.Type = LineType.CONTENTS_ALL;
@@ -423,12 +434,20 @@ namespace Mdoc.Parsers
                             }
                             break;
                         }
+                        else
+                        {
+                            throw new MdocParseException("block element error: [:contents-all:N-M]", lineCount);
+                        }
                     }
                     break;
                 }
+                else
+                {
+                    throw new MdocParseException("block element error: [:contents-all:N-M]", lineCount);
+                }
             }
 
-            throw new ApplicationException("Syntax error [:contents:N-M]");
+            throw new MdocParseException("block element error: [:contents-all:N-M]", lineCount);
         }
 
         private int CountIndent(string line, ref int index)

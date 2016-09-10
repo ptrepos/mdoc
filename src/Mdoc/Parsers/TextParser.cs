@@ -177,11 +177,17 @@ namespace Mdoc.Parsers
             }
 
             if (bold)
-                elems.Add(new BoldEndTag());
+            {
+                throw new MdocParseException("inline element error: '*' is not closed.", 0);
+            }
             if (hardbold)
-                elems.Add(new HardboldEndTag());
+            {
+                throw new MdocParseException("inline element error: '**' is not closed.", 0);
+            }
             if (strikethrough)
-                elems.Add(new StrikethroughEndTag());
+            {
+                throw new MdocParseException("inline element error: '~~' is not closed.", 0);
+            }
 
             return elems.ToArray();
         }
@@ -201,7 +207,7 @@ namespace Mdoc.Parsers
 
             if (Match(text, index, '`') == false)
             {
-                throw new ApplicationException();
+                throw new MdocParseException("inline element error: '`' is not opened.", 0);
             }
             index++;
 
@@ -227,7 +233,7 @@ namespace Mdoc.Parsers
                 }
             }
 
-            throw new ApplicationException();
+            throw new MdocParseException("inline element error: '`' is not closed.", 0);
         }
 
         HyperlinkTag ParseHyperlinkAuto(string text, ref int index)
@@ -238,7 +244,7 @@ namespace Mdoc.Parsers
             if (Match(text, index, '[') == false ||
                 Match(text, index + 1, '[') == false)
             {
-                throw new ApplicationException();
+                throw new MdocParseException("inline element error: Hyperlink format error.", 0);
             }
             index += 2;
 
@@ -272,7 +278,7 @@ namespace Mdoc.Parsers
                 }
             }
 
-            throw new ApplicationException();
+            throw new MdocParseException("inline element error: Hyperlink format error.", 0);
         }
 
         HyperlinkTag ParseHyperlink(string text, ref int index)
@@ -282,7 +288,7 @@ namespace Mdoc.Parsers
 
             if (Match(text, index,'[') == false)
             {
-                throw new ApplicationException();
+                throw new MdocParseException("inline element error: Hyperlink format error.", 0);
             }
             index++;
             
@@ -321,7 +327,7 @@ namespace Mdoc.Parsers
                     }
                     else
                     {
-                        throw new ApplicationException();
+                        throw new MdocParseException("inline element error: Hyperlink format error.", 0);
                     }
                 }
                 else if (text[index] == '\\')
@@ -339,7 +345,7 @@ namespace Mdoc.Parsers
                 }
             }
 
-            throw new ApplicationException();
+            throw new MdocParseException("inline element error: Hyperlink format error.", 0);
         }
     }
 }

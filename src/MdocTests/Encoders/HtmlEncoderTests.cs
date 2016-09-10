@@ -73,42 +73,5 @@ CONTEXT1 CONTEXT1 CONTEXT1
 
             string ccc = writer.ToString();
         }
-
-        [TestMethod()]
-        public void Encode2Test()
-        {
-            Section[] sections;
-            using (StreamReader reader = new StreamReader(@"C:\workspace\magica\Mdoc\README.mdoc"))
-            {
-                SectionParser parser = new SectionParser(reader);
-
-                sections = parser.Parse();
-            }
-
-            using (StreamWriter writer = new StreamWriter(@"C:\workspace\magica\Mdoc\README.html"))
-            {
-                HtmlEncoder encoder = new HtmlEncoder();
-                encoder.Encode(writer, sections);
-            }
-
-        }
-        
-        [TestMethod()]
-        public void Encode3Test()
-        {
-            Section[] sections;
-            using (StreamReader reader = new StreamReader(@"C:\workspace\magica\mdoc\doc\manual.mdoc"))
-            {
-                SectionParser parser = new SectionParser(reader);
-
-                sections = parser.Parse();
-            }
-
-            using (StreamWriter writer = new StreamWriter(@"C:\workspace\magica\mdoc\doc\manual.html"))
-            {
-                HtmlEncoder encoder = new HtmlEncoder();
-                encoder.Encode(writer, sections);
-            }
-        }
     }
 }
