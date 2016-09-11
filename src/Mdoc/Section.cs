@@ -147,19 +147,19 @@ namespace Mdoc
         }
     }
 
+    public class EmphasisStartTag : TextElement
+    {
+    }
+
+    public class EmphasisEndTag : TextElement
+    {
+    }
+
     public class BoldStartTag : TextElement
     {
     }
 
     public class BoldEndTag : TextElement
-    {
-    }
-
-    public class HardboldStartTag : TextElement
-    {
-    }
-
-    public class HardboldEndTag : TextElement
     {
     }
 

@@ -20,13 +20,13 @@ namespace Mdoc.Parsers.Tests
             TextParser parser = new TextParser(text);
             TextElement[] elems = parser.Parse();
 
-            Assert.IsInstanceOfType(elems[0], typeof(BoldStartTag));
+            Assert.IsInstanceOfType(elems[0], typeof(EmphasisStartTag));
             Assert.IsInstanceOfType(elems[1], typeof(TextSpan));
-            Assert.IsInstanceOfType(elems[2], typeof(BoldEndTag));
+            Assert.IsInstanceOfType(elems[2], typeof(EmphasisEndTag));
             Assert.IsInstanceOfType(elems[3], typeof(TextSpan));
-            Assert.IsInstanceOfType(elems[4], typeof(HardboldStartTag));
+            Assert.IsInstanceOfType(elems[4], typeof(BoldStartTag));
             Assert.IsInstanceOfType(elems[5], typeof(TextSpan));
-            Assert.IsInstanceOfType(elems[6], typeof(HardboldEndTag));
+            Assert.IsInstanceOfType(elems[6], typeof(BoldEndTag));
             Assert.IsInstanceOfType(elems[7], typeof(StrikethroughStartTag));
             Assert.IsInstanceOfType(elems[8], typeof(TextSpan));
             Assert.IsInstanceOfType(elems[9], typeof(StrikethroughEndTag));

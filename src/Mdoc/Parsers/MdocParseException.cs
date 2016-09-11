@@ -10,7 +10,7 @@ namespace Mdoc.Parsers
     {
         private int line;
 
-        public MdocParseException(string message, int line) : base(string.Format("[line:{0}] ", line) + message)
+        public MdocParseException(string message, int line) : base(string.Format("[LINE:{0}]", line) + message)
         {
             this.line = line;
         }

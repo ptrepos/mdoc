@@ -7,12 +7,12 @@ namespace Mdoc.Parsers
 {
     public class SectionParser
     {
-        private LineParser parser;
+        private LineParser lineParser;
         private TextWriter messageWriter = null;
 
         public SectionParser(TextReader reader)
         {
-            this.parser = new LineParser(reader);
+            this.lineParser = new LineParser(reader);
         }
 
         public TextWriter MessageWriter
@@ -27,31 +27,32 @@ namespace Mdoc.Parsers
 
             try
             {
-                parser.Parse();
+                lineParser.Parse();
             }
             catch (Exception ex)
             {
                 WriteMessage(ex.Message);
             }
 
-            while (parser.Type != LineType.EOF) {
+            while (lineParser.Type != LineType.EOF)
+            {
                 try
                 {
-                    switch (parser.Type)
+                    switch (lineParser.Type)
                     {
                         case LineType.EMPTY:
-                            parser.Parse();
+                            lineParser.Parse();
                             continue;
                         case LineType.TEXT:
                             sections.Add(ParseParagraph());
                             break;
                         case LineType.HEAD:
-                            sections.Add(new HeadSection(ParseText(parser.Text), parser.Level));
-                            parser.Parse();
+                            sections.Add(new HeadSection(ParseText(lineParser.Text, lineParser.LineCount), lineParser.Level));
+                            lineParser.Parse();
                             break;
                         case LineType.HORIZON:
                             sections.Add(new HorizonSection());
-                            parser.Parse();
+                            lineParser.Parse();
                             break;
                         case LineType.LIST_ITEM:
                             sections.Add(ParseListSection(1));
@@ -69,18 +70,19 @@ namespace Mdoc.Parsers
                             sections.Add(ParseQuoteSection(1));
                             break;
                         case LineType.CONTENTS:
-                            sections.Add(new ContentsSection(parser.LevelLower, parser.LevelUpper));
-                            parser.Parse();
+                            sections.Add(new ContentsSection(lineParser.LevelLower, lineParser.LevelUpper));
+                            lineParser.Parse();
                             break;
                         case LineType.CONTENTS_ALL:
-                            sections.Add(new ContentsAllSection(parser.LevelLower, parser.LevelUpper));
-                            parser.Parse();
+                            sections.Add(new ContentsAllSection(lineParser.LevelLower, lineParser.LevelUpper));
+                            lineParser.Parse();
                             break;
                     }
                 }
                 catch (Exception ex)
                 {
                     WriteMessage(ex.Message);
+                    lineParser.Parse();
                 }
             }
 
@@ -96,39 +98,39 @@ namespace Mdoc.Parsers
         private ParagraphSection ParseParagraph()
         {
             StringBuilder text = new StringBuilder();
-            text.AppendLine(parser.Text);
+            text.AppendLine(lineParser.Text);
 
-            while (parser.Parse())
+            while (lineParser.Parse())
             {
-                if (parser.Type == LineType.TEXT)
+                if (lineParser.Type == LineType.TEXT)
                 {
-                    text.AppendLine(parser.Text);
+                    text.AppendLine(lineParser.Text);
                 }
                 else
                 {
                     break;
                 }
             }
-            return new ParagraphSection(ParseText(text.ToString()));
+            return new ParagraphSection(ParseText(text.ToString(), lineParser.LineCount));
         }
 
         private ListSection ParseListSection(int level)
         {
             List<ListItemSection> items = new List<ListItemSection>();
 
-            while (parser.Type != LineType.EOF)
+            while (lineParser.Type != LineType.EOF)
             {
-                if (parser.Type == LineType.LIST_ITEM && parser.Level == level)
+                if (lineParser.Type == LineType.LIST_ITEM && lineParser.Level == level)
                 {
-                    items.Add(new ListItemSection(ParseText(parser.Text), parser.Mark));
-                    parser.Parse();
+                    items.Add(new ListItemSection(ParseText(lineParser.Text, lineParser.LineCount), lineParser.Mark));
+                    lineParser.Parse();
                 }
-                else if (parser.Level > level)
+                else if (lineParser.Level > level)
                 {
                     ListSection section = null;
-                    if (parser.Type == LineType.LIST_ITEM)
+                    if (lineParser.Type == LineType.LIST_ITEM)
                         section = ParseListSection(level + 1);
-                    else if (parser.Type == LineType.ORDER_LIST_ITEM)
+                    else if (lineParser.Type == LineType.ORDER_LIST_ITEM)
                         section = ParseOrderListSection(level + 1);
                     else
                         break;
@@ -151,20 +153,20 @@ namespace Mdoc.Parsers
         {
             List<ListItemSection> items = new List<ListItemSection>();
 
-            while (parser.Type != LineType.EOF)
+            while (lineParser.Type != LineType.EOF)
             {
-                if (parser.Type == LineType.ORDER_LIST_ITEM && parser.Level == level)
+                if (lineParser.Type == LineType.ORDER_LIST_ITEM && lineParser.Level == level)
                 {
-                    items.Add(new ListItemSection(ParseText(parser.Text), '\0'));
-                    if (parser.Parse() == false)
+                    items.Add(new ListItemSection(ParseText(lineParser.Text, lineParser.LineCount), '\0'));
+                    if (lineParser.Parse() == false)
                         return new OrderListSection(items.ToArray());
                 }
-                else if (parser.Level > level)
+                else if (lineParser.Level > level)
                 {
                     ListSection section = null;
-                    if (parser.Type == LineType.LIST_ITEM)
+                    if (lineParser.Type == LineType.LIST_ITEM)
                         section = ParseListSection(level + 1);
-                    else if (parser.Type == LineType.ORDER_LIST_ITEM)
+                    else if (lineParser.Type == LineType.ORDER_LIST_ITEM)
                         section = ParseOrderListSection(level + 1);
                     else
                         break;
@@ -189,17 +191,17 @@ namespace Mdoc.Parsers
 
             for (;;)
             {
-                if (parser.Type != LineType.DEFINITION_ITEM)
+                if (lineParser.Type != LineType.DEFINITION_ITEM)
                 {
                     break;
                 }
-                string caption = parser.Text;
+                string caption = lineParser.Text;
 
-                parser.Parse();
+                lineParser.Parse();
 
                 ParagraphSection paragraph = ParseParagraph();
 
-                items.Add(new DefinitionItemSection(ParseText(caption), paragraph.Text));
+                items.Add(new DefinitionItemSection(ParseText(caption, lineParser.LineCount), paragraph.Text));
 
                 if (SkipEmptyLine() == false)
                 {
@@ -213,13 +215,13 @@ namespace Mdoc.Parsers
         private CodeSection ParseCodeSection()
         {
             StringBuilder text = new StringBuilder();
-            text.AppendLine(parser.Text);
+            text.AppendLine(lineParser.Text);
 
-            while (parser.Parse())
+            while (lineParser.Parse())
             {
-                if (parser.Type == LineType.CODE)
+                if (lineParser.Type == LineType.CODE)
                 {
-                    text.AppendLine(parser.Text);
+                    text.AppendLine(lineParser.Text);
                 }
                 else
                 {
@@ -236,17 +238,17 @@ namespace Mdoc.Parsers
             StringBuilder text = new StringBuilder();
 
             for (;;) {
-                if (parser.Type == LineType.QUOTE && parser.Level == level)
+                if (lineParser.Type == LineType.QUOTE && lineParser.Level == level)
                 {
-                    text.AppendLine(parser.Text);
-                    if (parser.Parse() == false)
+                    text.AppendLine(lineParser.Text);
+                    if (lineParser.Parse() == false)
                         break;
                 }
-                else if (parser.Type == LineType.QUOTE && parser.Level > level)
+                else if (lineParser.Type == LineType.QUOTE && lineParser.Level > level)
                 {
                     if (text.Length > 0)
                     {
-                        sections.Add(new ParagraphSection(ParseText(text.ToString())));
+                        sections.Add(new ParagraphSection(ParseText(text.ToString(), lineParser.LineCount)));
                         text.Clear();
                     }
                     sections.Add(ParseQuoteSection(level + 1));
@@ -259,7 +261,7 @@ namespace Mdoc.Parsers
 
             if (text.Length > 0)
             {
-                sections.Add(new ParagraphSection(ParseText(text.ToString())));
+                sections.Add(new ParagraphSection(ParseText(text.ToString(), lineParser.LineCount)));
             }
 
             return new QuoteSection(sections.ToArray());
@@ -267,9 +269,9 @@ namespace Mdoc.Parsers
 
         private bool SkipEmptyLine()
         {
-            while (parser.Type == LineType.EMPTY)
+            while (lineParser.Type == LineType.EMPTY)
             {
-                if (parser.Parse() == false)
+                if (lineParser.Parse() == false)
                 {
                     return false;
                 }
@@ -277,9 +279,9 @@ namespace Mdoc.Parsers
             return true;
         }
 
-        private TextElement[] ParseText(string text)
+        private TextElement[] ParseText(string text, int lineCount)
         {
-            TextParser parser = new TextParser(text);
+            TextParser parser = new TextParser(text, lineCount);
             return parser.Parse();
         }
     }

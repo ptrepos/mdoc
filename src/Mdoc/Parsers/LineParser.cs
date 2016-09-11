@@ -33,7 +33,7 @@ namespace Mdoc.Parsers
         public int LevelLower;
         public int LevelUpper;
 
-        private int lineCount = 0;
+        public int LineCount = 0;
 
         public LineParser(TextReader reader)
         {
@@ -57,7 +57,7 @@ namespace Mdoc.Parsers
                 this.Type = LineType.EOF;
                 return false;
             }
-            lineCount++;
+            LineCount++;
 
             // EMPTY LINE
             if (line.Length <= 0)
@@ -340,7 +340,7 @@ namespace Mdoc.Parsers
                 {
                     if (levelLower.Length <= 0)
                     {
-                        throw new MdocParseException("block element error: [:contents:N-M]", lineCount);
+                        throw new MdocParseException(MessageResource.ContentsError, LineCount);
                     }
                     i++;
 
@@ -358,7 +358,7 @@ namespace Mdoc.Parsers
                             {
                                 if (levelUpper.Length <= 0)
                                 {
-                                    throw new MdocParseException("block element error: [:contents:N-M]", lineCount);
+                                    throw new MdocParseException(MessageResource.ContentsError, LineCount);
                                 }
 
                                 this.Type = LineType.CONTENTS;
@@ -371,18 +371,18 @@ namespace Mdoc.Parsers
                         }
                         else
                         {
-                            throw new MdocParseException("block element error: [:contents:N-M]", lineCount);
+                            throw new MdocParseException(MessageResource.ContentsError, LineCount);
                         }
                     }
                     break;
                 }
                 else
                 {
-                    throw new MdocParseException("block element error: [:contents:N-M]", lineCount);
+                    throw new MdocParseException(MessageResource.ContentsError, LineCount);
                 }
             }
 
-            throw new MdocParseException("block element error: [:contents:N-M]", lineCount);
+            throw new MdocParseException(MessageResource.ContentsError, LineCount);
         }
         private bool ParseContentsAll(string line)
         {
@@ -405,7 +405,7 @@ namespace Mdoc.Parsers
                 {
                     if (levelLower.Length <= 0)
                     {
-                        throw new MdocParseException("block element error: [:contents-all:N-M]", lineCount);
+                        throw new MdocParseException(MessageResource.ContentsAllError, LineCount);
                     }
                     i++;
 
@@ -423,7 +423,7 @@ namespace Mdoc.Parsers
                             {
                                 if (levelUpper.Length <= 0)
                                 {
-                                    throw new MdocParseException("block element error: [:contents-all:N-M]", lineCount);
+                                    throw new MdocParseException(MessageResource.ContentsAllError, LineCount);
                                 }
 
                                 this.Type = LineType.CONTENTS_ALL;
@@ -436,18 +436,18 @@ namespace Mdoc.Parsers
                         }
                         else
                         {
-                            throw new MdocParseException("block element error: [:contents-all:N-M]", lineCount);
+                            throw new MdocParseException(MessageResource.ContentsAllError, LineCount);
                         }
                     }
                     break;
                 }
                 else
                 {
-                    throw new MdocParseException("block element error: [:contents-all:N-M]", lineCount);
+                    throw new MdocParseException(MessageResource.ContentsAllError, LineCount);
                 }
             }
 
-            throw new MdocParseException("block element error: [:contents-all:N-M]", lineCount);
+            throw new MdocParseException(MessageResource.ContentsAllError, LineCount);
         }
 
         private int CountIndent(string line, ref int index)

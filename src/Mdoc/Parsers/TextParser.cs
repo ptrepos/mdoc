@@ -9,16 +9,18 @@ namespace Mdoc.Parsers
     public class TextParser
     {
         private string text;
+        private int line;
 
-        public TextParser(string text)
+        public TextParser(string text, int line)
         {
             this.text = text;
+            this.line = line;
         }
 
         public TextElement[] Parse()
         {
+            bool emphasis = false;
             bool bold = false;
-            bool hardbold = false;
             bool strikethrough = false;
 
             List<TextElement> elems = new List<TextElement>();
@@ -40,16 +42,16 @@ namespace Mdoc.Parsers
                                 builder.Clear();
                             }
 
-                            if (!hardbold)
+                            if (!bold)
                             {
-                                elems.Add(new HardboldStartTag());
+                                elems.Add(new BoldStartTag());
                             }
                             else
                             {
-                                elems.Add(new HardboldEndTag());
+                                elems.Add(new BoldEndTag());
                             }
 
-                            hardbold = !hardbold;
+                            bold = !bold;
 
                             i += 2;
                         }
@@ -62,16 +64,16 @@ namespace Mdoc.Parsers
                                 builder.Clear();
                             }
 
-                            if (!bold)
+                            if (!emphasis)
                             {
-                                elems.Add(new BoldStartTag());
+                                elems.Add(new EmphasisStartTag());
                             }
                             else
                             {
-                                elems.Add(new BoldEndTag());
+                                elems.Add(new EmphasisEndTag());
                             }
 
-                            bold = !bold;
+                            emphasis = !emphasis;
 
                             i += 1;
                         }
@@ -143,7 +145,7 @@ namespace Mdoc.Parsers
                                 builder.Clear();
                             }
 
-                            HyperlinkTag tag = ParseHyperlinkAuto(text, ref i);
+                            HyperlinkTag tag = ParseUrlHyperlink(text, ref i);
                             if (tag != null)
                                 elems.Add(tag);
                             continue;
@@ -176,17 +178,17 @@ namespace Mdoc.Parsers
                 builder.Clear();
             }
 
+            if (emphasis)
+            {
+                throw new MdocParseException(MessageResource.EmphasisError, line);
+            }
             if (bold)
             {
-                throw new MdocParseException("inline element error: '*' is not closed.", 0);
-            }
-            if (hardbold)
-            {
-                throw new MdocParseException("inline element error: '**' is not closed.", 0);
+                throw new MdocParseException(MessageResource.BoldError, line);
             }
             if (strikethrough)
             {
-                throw new MdocParseException("inline element error: '~~' is not closed.", 0);
+                throw new MdocParseException(MessageResource.StrikethroughError, line);
             }
 
             return elems.ToArray();
@@ -207,7 +209,7 @@ namespace Mdoc.Parsers
 
             if (Match(text, index, '`') == false)
             {
-                throw new MdocParseException("inline element error: '`' is not opened.", 0);
+                throw new MdocParseException(MessageResource.InlineCodeError, line);
             }
             index++;
 
@@ -233,10 +235,10 @@ namespace Mdoc.Parsers
                 }
             }
 
-            throw new MdocParseException("inline element error: '`' is not closed.", 0);
+            throw new MdocParseException(MessageResource.InlineCodeError, line);
         }
 
-        HyperlinkTag ParseHyperlinkAuto(string text, ref int index)
+        HyperlinkTag ParseUrlHyperlink(string text, ref int index)
         {
             StringBuilder context = new StringBuilder();
             StringBuilder href = new StringBuilder();
@@ -244,7 +246,7 @@ namespace Mdoc.Parsers
             if (Match(text, index, '[') == false ||
                 Match(text, index + 1, '[') == false)
             {
-                throw new MdocParseException("inline element error: Hyperlink format error.", 0);
+                throw new MdocParseException(MessageResource.UriHyperlinkError, line);
             }
             index += 2;
 
@@ -278,7 +280,7 @@ namespace Mdoc.Parsers
                 }
             }
 
-            throw new MdocParseException("inline element error: Hyperlink format error.", 0);
+            throw new MdocParseException(MessageResource.UriHyperlinkError, line);
         }
 
         HyperlinkTag ParseHyperlink(string text, ref int index)
@@ -288,7 +290,7 @@ namespace Mdoc.Parsers
 
             if (Match(text, index,'[') == false)
             {
-                throw new MdocParseException("inline element error: Hyperlink format error.", 0);
+                throw new MdocParseException(MessageResource.HyperlinkError, line);
             }
             index++;
             
@@ -327,7 +329,7 @@ namespace Mdoc.Parsers
                     }
                     else
                     {
-                        throw new MdocParseException("inline element error: Hyperlink format error.", 0);
+                        throw new MdocParseException(MessageResource.HyperlinkError, line);
                     }
                 }
                 else if (text[index] == '\\')
@@ -345,7 +347,7 @@ namespace Mdoc.Parsers
                 }
             }
 
-            throw new MdocParseException("inline element error: Hyperlink format error.", 0);
+            throw new MdocParseException(MessageResource.HyperlinkError, line);
         }
     }
 }

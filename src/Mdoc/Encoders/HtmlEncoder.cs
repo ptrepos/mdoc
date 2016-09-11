@@ -161,19 +161,19 @@ namespace Mdoc.Encoders
 
                     writer.Write(Escape(s.Text));
                 }
-                else if (i is BoldStartTag)
+                else if (i is EmphasisStartTag)
                 {
                     writer.Write("<em>");
                 }
-                else if (i is BoldEndTag)
+                else if (i is EmphasisEndTag)
                 {
                     writer.Write("</em>");
                 }
-                else if (i is HardboldStartTag)
+                else if (i is BoldStartTag)
                 {
                     writer.Write("<strong>");
                 }
-                else if (i is HardboldEndTag)
+                else if (i is BoldEndTag)
                 {
                     writer.Write("</strong>");
                 }

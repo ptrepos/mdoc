@@ -46,10 +46,21 @@
     <Compile Include="MdocTool.cs" />
     <Compile Include="Parsers\LineParser.cs" />
     <Compile Include="Parsers\MdocParseException.cs" />
+    <Compile Include="Parsers\MessageResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MessageResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Parsers\TextParser.cs" />
     <Compile Include="Section.cs" />
     <Compile Include="Parsers\SectionParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Parsers\MessageResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MessageResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
