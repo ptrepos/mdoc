@@ -65,6 +65,17 @@ ul ul, ol ul, ul ol, ol ol {
 	padding: 0em;
 }
 
+ul.table_of_contents {
+	margin-left: 4em;
+	margin-right: 1em;
+	padding: 0em;
+}
+
+ul.table_of_contents ul {
+	margin-left: 1em;
+	padding: 0em;
+}
+
 /* list item */
 li.aster {
 	list-style-position: outside;
