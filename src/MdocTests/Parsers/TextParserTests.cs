@@ -17,7 +17,7 @@ namespace Mdoc.Parsers.Tests
         {
             string text = @"*AAAAAA* **BBBBB**~~BBBBB~~";
 
-            TextParser parser = new TextParser(text);
+            TextParser parser = new TextParser(text, 100);
             TextElement[] elems = parser.Parse();
 
             Assert.IsInstanceOfType(elems[0], typeof(EmphasisStartTag));
@@ -37,7 +37,7 @@ namespace Mdoc.Parsers.Tests
         {
             string text = @"\*\*\^\^\~\\";
 
-            TextParser parser = new TextParser(text);
+            TextParser parser = new TextParser(text, 0);
             TextElement[] elems = parser.Parse();
 
             Assert.IsInstanceOfType(elems[0], typeof(TextSpan));
@@ -49,7 +49,7 @@ namespace Mdoc.Parsers.Tests
         {
             string text = @"`aaaa**~~**aaaaa**`";
 
-            TextParser parser = new TextParser(text);
+            TextParser parser = new TextParser(text, 0);
             TextElement[] elems = parser.Parse();
 
             Assert.IsInstanceOfType(elems[0], typeof(CodeSpan));

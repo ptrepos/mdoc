@@ -9,9 +9,13 @@ namespace MdocViewer
 {
     public class Contents
     {
-        public static string GetCssPath()
+        public static Uri GetCssPath()
         {
-            return Path.Combine(Application.StartupPath, "style/doc.css");
+            return new Uri("style/doc.css", UriKind.Relative);
+        }
+        public static Uri GetCssAbsolutePath()
+        {
+            return new Uri("file:///" + Path.Combine(Application.StartupPath, "style/doc.css"), UriKind.Absolute);
         }
     }
 }

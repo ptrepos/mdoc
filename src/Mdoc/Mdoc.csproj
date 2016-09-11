@@ -43,6 +43,7 @@
     <Compile Include="Encoders\ContentsTableGenerator.cs" />
     <Compile Include="Encoders\MarkdownEncoder.cs" />
     <Compile Include="Encoders\HtmlEncoder.cs" />
+    <Compile Include="HtmlEncodeParameters.cs" />
     <Compile Include="MdocTool.cs" />
     <Compile Include="Parsers\LineParser.cs" />
     <Compile Include="Parsers\MdocParseException.cs" />

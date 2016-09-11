@@ -12,6 +12,9 @@ namespace MdocViewer
 {
     public partial class MdocViewerForm : Form
     {
+        private const string OPEN_FILTER = "mdoc|*.mdoc|All Files|*.*";
+        private const string SAVE_FILTER = "HTML|*.html|All Files|*.*";
+
         private string mdocFile;
 
         public MdocViewerForm()
@@ -73,10 +76,10 @@ namespace MdocViewer
             SetFormMode();
         }
 
-        private void fileOpenItem_Click(object sender, EventArgs e)
+        private void fileOpenMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "mdoc|*.mdoc|All Files|*.*";
+            dialog.Filter = OPEN_FILTER;
 
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -84,13 +87,33 @@ namespace MdocViewer
             }
         }
 
-        private void endItem_Click(object sender, EventArgs e)
+        private void fileSaveMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = SAVE_FILTER;
+            dialog.FileName = Path.GetFileNameWithoutExtension(mdocFile) + ".html";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                SaveHtmlFile(dialog.FileName, mdocFile);
+            }
         }
 
-        private void previousButton_Click(object sender, EventArgs e)
+        private void fileSaveWithoutHeaderMenuItem_Click(object sender, EventArgs e)
         {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = SAVE_FILTER;
+            dialog.FileName = Path.GetFileNameWithoutExtension(mdocFile) + ".html";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                SaveHtmlFile(dialog.FileName, mdocFile, false);
+            }
+        }
+
+        private void closeMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void updateButon_Click(object sender, EventArgs e)
@@ -110,17 +133,43 @@ namespace MdocViewer
                 StringWriter writer = new StringWriter();
                 StringWriter messageWriter = new StringWriter();
 
+                HtmlEncodeParameters parameters = new HtmlEncodeParameters();
+                parameters.HeaderIncludes = true;
+                parameters.DocumentTitle = Path.GetFileNameWithoutExtension(fileName);
+                parameters.CssUrl = Contents.GetCssAbsolutePath();
+
                 MdocTool.EncodeHtml(
                     writer,
                     reader,
                     messageWriter,
-                    Path.GetFileNameWithoutExtension(fileName),
-                    Contents.GetCssPath());
-
+                    parameters);
+                
                 mdocFile = fileName;
                 browser.DocumentText = writer.ToString();
 
                 messageBox.Text = messageWriter.ToString();
+            }
+        }
+
+        public void SaveHtmlFile(string saveFile, string fileName, bool headerIncludes = true)
+        {
+            using (StreamReader reader = new StreamReader(fileName, Encoding.UTF8))
+            {
+                using (StreamWriter writer = new StreamWriter(saveFile, false, Encoding.UTF8))
+                {
+                    StringWriter messageWriter = new StringWriter();
+
+                    HtmlEncodeParameters parameters = new HtmlEncodeParameters();
+                    parameters.HeaderIncludes = headerIncludes;
+                    parameters.DocumentTitle = Path.GetFileNameWithoutExtension(fileName);
+                    parameters.CssUrl = Contents.GetCssPath();
+
+                    MdocTool.EncodeHtml(
+                        writer,
+                        reader,
+                        messageWriter,
+                        parameters);
+                }
             }
         }
 
@@ -130,11 +179,15 @@ namespace MdocViewer
             {
                 updateButton.Enabled = false;
                 browser.Visible = true;
+                fileSaveMenuItem.Enabled = false;
+                fileSaveWithoutHeaderMenuItem.Enabled = false;
             }
             else
             {
                 updateButton.Enabled = true;
                 browser.Visible = true;
+                fileSaveMenuItem.Enabled = true;
+                fileSaveWithoutHeaderMenuItem.Enabled = true;
             }
         }
     }

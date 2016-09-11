@@ -31,9 +31,12 @@
             this.browser = new System.Windows.Forms.WebBrowser();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.fileOpenItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileOpenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.fileSaveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileSaveWithoutHeaderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.endItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateButton = new System.Windows.Forms.Button();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
@@ -74,31 +77,53 @@
             // fileItem
             // 
             this.fileItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileOpenItem,
+            this.fileOpenMenuItem,
+            this.toolStripSeparator2,
+            this.fileSaveMenuItem,
+            this.fileSaveWithoutHeaderMenuItem,
             this.toolStripSeparator1,
-            this.endItem});
+            this.closeMenuItem});
             this.fileItem.Name = "fileItem";
             this.fileItem.Size = new System.Drawing.Size(52, 20);
             this.fileItem.Text = "ファイル";
             // 
-            // fileOpenItem
+            // fileOpenMenuItem
             // 
-            this.fileOpenItem.Name = "fileOpenItem";
-            this.fileOpenItem.Size = new System.Drawing.Size(150, 22);
-            this.fileOpenItem.Text = "ファイルを開く";
-            this.fileOpenItem.Click += new System.EventHandler(this.fileOpenItem_Click);
+            this.fileOpenMenuItem.Name = "fileOpenMenuItem";
+            this.fileOpenMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.fileOpenMenuItem.Text = "ファイルを開く";
+            this.fileOpenMenuItem.Click += new System.EventHandler(this.fileOpenMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(223, 6);
+            // 
+            // fileSaveMenuItem
+            // 
+            this.fileSaveMenuItem.Name = "fileSaveMenuItem";
+            this.fileSaveMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.fileSaveMenuItem.Text = "ファイルを保存";
+            this.fileSaveMenuItem.Click += new System.EventHandler(this.fileSaveMenuItem_Click);
+            // 
+            // fileSaveWithoutHeaderMenuItem
+            // 
+            this.fileSaveWithoutHeaderMenuItem.Name = "fileSaveWithoutHeaderMenuItem";
+            this.fileSaveWithoutHeaderMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.fileSaveWithoutHeaderMenuItem.Text = "ファイルを保存(HTMLヘッダ除く)";
+            this.fileSaveWithoutHeaderMenuItem.Click += new System.EventHandler(this.fileSaveWithoutHeaderMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(147, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(223, 6);
             // 
-            // endItem
+            // closeMenuItem
             // 
-            this.endItem.Name = "endItem";
-            this.endItem.Size = new System.Drawing.Size(150, 22);
-            this.endItem.Text = "プログラムを終了";
-            this.endItem.Click += new System.EventHandler(this.endItem_Click);
+            this.closeMenuItem.Name = "closeMenuItem";
+            this.closeMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.closeMenuItem.Text = "プログラムを終了";
+            this.closeMenuItem.Click += new System.EventHandler(this.closeMenuItem_Click);
             // 
             // helpItem
             // 
@@ -182,13 +207,16 @@
         private System.Windows.Forms.WebBrowser browser;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileItem;
-        private System.Windows.Forms.ToolStripMenuItem endItem;
+        private System.Windows.Forms.ToolStripMenuItem closeMenuItem;
         private System.Windows.Forms.Button updateButton;
-        private System.Windows.Forms.ToolStripMenuItem fileOpenItem;
+        private System.Windows.Forms.ToolStripMenuItem fileOpenMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem helpItem;
         private System.Windows.Forms.SplitContainer splitContainer;
         private System.Windows.Forms.TextBox messageBox;
+        private System.Windows.Forms.ToolStripMenuItem fileSaveMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fileSaveWithoutHeaderMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
 
