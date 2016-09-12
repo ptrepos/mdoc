@@ -47,7 +47,7 @@ namespace Mdoc
                 writer.WriteLine("<!DOCTYPE html>");
                 writer.WriteLine("<html>");
                 writer.WriteLine("<head>");
-                writer.WriteLine("<meta charset=\"UTF-8\">");
+                writer.WriteLine("<meta charset=\"UTF-8\"/>");
 
                 if (!string.IsNullOrEmpty(parameters.DocumentTitle))
                     writer.WriteLine("<title>{0}</title>", parameters.DocumentTitle);

@@ -185,10 +185,15 @@ namespace Mdoc.Encoders
                 {
                     writer.Write("</strike>");
                 }
-                else if (i is HyperlinkTag)
+                else if (i is HyperlinkSpan)
                 {
-                    HyperlinkTag s = (HyperlinkTag)i;
+                    HyperlinkSpan s = (HyperlinkSpan)i;
                     writer.Write("<a href=\"{1}\">{0}</a>", Escape(s.Text), Escape(s.Href));
+                }
+                else if (i is ImageSpan)
+                {
+                    ImageSpan s = (ImageSpan)i;
+                    writer.Write("<img src=\"{1}\" alt=\"{0}\"/>", Escape(s.Text), Escape(s.Source));
                 }
             }
         }
@@ -264,9 +269,9 @@ namespace Mdoc.Encoders
 
                     builder.Append(Escape(s.Text));
                 }
-                else if (i is HyperlinkTag)
+                else if (i is HyperlinkSpan)
                 {
-                    HyperlinkTag s = (HyperlinkTag)i;
+                    HyperlinkSpan s = (HyperlinkSpan)i;
                     builder.Append(Escape(s.Text));
                 }
             }

@@ -180,16 +180,30 @@ namespace Mdoc
         }
     }
 
-    public class HyperlinkTag : TextElement
+    public class HyperlinkSpan : TextElement
     {
         public string Text;
         public string Href;
         public string Title;
 
-        public HyperlinkTag(string text, string href, string title)
+        public HyperlinkSpan(string text, string href, string title)
         {
             this.Text = text;
             this.Href = href;
+            this.Title = title;
+        }
+    }
+
+    public class ImageSpan : TextElement
+    {
+        public string Text;
+        public string Source;
+        public string Title;
+
+        public ImageSpan(string text, string href, string title)
+        {
+            this.Text = text;
+            this.Source = href;
             this.Title = title;
         }
     }
