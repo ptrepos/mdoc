@@ -58,7 +58,7 @@
             this.browser.Margin = new System.Windows.Forms.Padding(0);
             this.browser.MinimumSize = new System.Drawing.Size(20, 20);
             this.browser.Name = "browser";
-            this.browser.Size = new System.Drawing.Size(1008, 427);
+            this.browser.Size = new System.Drawing.Size(1008, 425);
             this.browser.TabIndex = 0;
             this.browser.Tag = "";
             this.browser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.browser_DocumentCompleted);
@@ -70,7 +70,7 @@
             this.helpItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1008, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1008, 26);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -84,51 +84,51 @@
             this.toolStripSeparator1,
             this.closeMenuItem});
             this.fileItem.Name = "fileItem";
-            this.fileItem.Size = new System.Drawing.Size(52, 20);
+            this.fileItem.Size = new System.Drawing.Size(68, 22);
             this.fileItem.Text = "ファイル";
             // 
             // fileOpenMenuItem
             // 
             this.fileOpenMenuItem.Name = "fileOpenMenuItem";
-            this.fileOpenMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.fileOpenMenuItem.Size = new System.Drawing.Size(264, 22);
             this.fileOpenMenuItem.Text = "ファイルを開く";
             this.fileOpenMenuItem.Click += new System.EventHandler(this.fileOpenMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(223, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(261, 6);
             // 
             // fileSaveMenuItem
             // 
             this.fileSaveMenuItem.Name = "fileSaveMenuItem";
-            this.fileSaveMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.fileSaveMenuItem.Size = new System.Drawing.Size(264, 22);
             this.fileSaveMenuItem.Text = "ファイルを保存";
             this.fileSaveMenuItem.Click += new System.EventHandler(this.fileSaveMenuItem_Click);
             // 
             // fileSaveWithoutHeaderMenuItem
             // 
             this.fileSaveWithoutHeaderMenuItem.Name = "fileSaveWithoutHeaderMenuItem";
-            this.fileSaveWithoutHeaderMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.fileSaveWithoutHeaderMenuItem.Size = new System.Drawing.Size(264, 22);
             this.fileSaveWithoutHeaderMenuItem.Text = "ファイルを保存(HTMLヘッダ除く)";
             this.fileSaveWithoutHeaderMenuItem.Click += new System.EventHandler(this.fileSaveWithoutHeaderMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(223, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(261, 6);
             // 
             // closeMenuItem
             // 
             this.closeMenuItem.Name = "closeMenuItem";
-            this.closeMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.closeMenuItem.Size = new System.Drawing.Size(264, 22);
             this.closeMenuItem.Text = "プログラムを終了";
             this.closeMenuItem.Click += new System.EventHandler(this.closeMenuItem_Click);
             // 
             // helpItem
             // 
             this.helpItem.Name = "helpItem";
-            this.helpItem.Size = new System.Drawing.Size(48, 20);
+            this.helpItem.Size = new System.Drawing.Size(56, 22);
             this.helpItem.Text = "ヘルプ";
             // 
             // updateButton
@@ -146,7 +146,7 @@
             // splitContainer
             // 
             this.splitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer.Location = new System.Drawing.Point(0, 24);
+            this.splitContainer.Location = new System.Drawing.Point(0, 26);
             this.splitContainer.Name = "splitContainer";
             this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -157,8 +157,8 @@
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.Controls.Add(this.messageBox);
-            this.splitContainer.Size = new System.Drawing.Size(1008, 537);
-            this.splitContainer.SplitterDistance = 427;
+            this.splitContainer.Size = new System.Drawing.Size(1008, 535);
+            this.splitContainer.SplitterDistance = 425;
             this.splitContainer.TabIndex = 4;
             // 
             // messageBox
@@ -187,6 +187,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MdocViewerForm";
+            this.Text = "Mdoc Viewer";
             this.Load += new System.EventHandler(this.MdocViewerForm_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MdocViewerForm_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MdocViewerForm_DragEnter);

@@ -260,8 +260,8 @@ XXXXXXXXXXXXXXXXXX
 
                 Assert.IsFalse(parser.Parse());
             }
-
         }
+
         [TestMethod()]
         public void ParseOrderListTest()
         {
@@ -384,15 +384,15 @@ zzzzzzzzzzzz
                 Assert.AreEqual(parser.Text, "zzzzzzzzzzzz");
 
                 Assert.IsTrue(parser.Parse());
-                Assert.AreEqual(parser.Type, LineType.CODE);
+                Assert.AreEqual(parser.Type, LineType.INDENTED_TEXT);
                 Assert.AreEqual(parser.Text, "***********************");
 
                 Assert.IsTrue(parser.Parse());
-                Assert.AreEqual(parser.Type, LineType.CODE);
+                Assert.AreEqual(parser.Type, LineType.INDENTED_TEXT);
                 Assert.AreEqual(parser.Text, "-----------------------");
 
                 Assert.IsTrue(parser.Parse());
-                Assert.AreEqual(parser.Type, LineType.CODE);
+                Assert.AreEqual(parser.Type, LineType.INDENTED_TEXT);
                 Assert.AreEqual(parser.Text, "ppppppppppppppppppppppp");
 
                 Assert.IsFalse(parser.Parse());
@@ -455,7 +455,31 @@ zzzzzzzzzzzz
 
                 Assert.IsFalse(parser.Parse());
             }
+        }
 
+        [TestMethod()]
+        public void ParseContentsTest()
+        {
+            string Text = @"[:contents:1-5]
+[:contents-all:1-5]
+";
+
+            using (StringReader reader = new StringReader(Text))
+            {
+                LineParser parser = new LineParser(reader);
+
+                Assert.IsTrue(parser.Parse());
+                Assert.AreEqual(parser.Type, LineType.CONTENTS);
+                Assert.AreEqual(parser.LevelLower, 1);
+                Assert.AreEqual(parser.LevelUpper, 5);
+
+                Assert.IsTrue(parser.Parse());
+                Assert.AreEqual(parser.Type, LineType.CONTENTS_ALL);
+                Assert.AreEqual(parser.LevelLower, 1);
+                Assert.AreEqual(parser.LevelUpper, 5);
+
+                Assert.IsFalse(parser.Parse());
+            }
         }
     }
 }

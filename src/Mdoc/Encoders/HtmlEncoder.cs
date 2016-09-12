@@ -106,22 +106,6 @@ namespace Mdoc.Encoders
                     }
                     writer.WriteLine("</dl>");
                 }
-                else if (section is DefinitionListSection)
-                {
-                    DefinitionListSection s = (DefinitionListSection)section;
-
-                    writer.Write("<dl>");
-                    foreach (DefinitionItemSection j in s.Items)
-                    {
-                        writer.Write("<dt>");
-                        WriteText(writer, j.Caption);
-                        writer.WriteLine("</dt>");
-                        writer.Write("<dd>");
-                        WriteText(writer, j.Data);
-                        writer.WriteLine("</dd>");
-                    }
-                    writer.WriteLine("</dl>");
-                }
                 else if (section is ContentsSection)
                 {
                     ContentsSection s = (ContentsSection)section;

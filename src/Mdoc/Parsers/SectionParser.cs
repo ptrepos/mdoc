@@ -63,7 +63,7 @@ namespace Mdoc.Parsers
                         case LineType.DEFINITION_ITEM:
                             sections.Add(ParseDefinitionListSection());
                             break;
-                        case LineType.CODE:
+                        case LineType.INDENTED_TEXT:
                             sections.Add(ParseCodeSection());
                             break;
                         case LineType.QUOTE:
@@ -112,6 +112,29 @@ namespace Mdoc.Parsers
                 }
             }
             return new ParagraphSection(ParseText(text.ToString(), lineParser.LineCount));
+        }
+
+        private string ParseIndentedText()
+        {
+            if (lineParser.Type != LineType.INDENTED_TEXT)
+                return "";
+
+            StringBuilder text = new StringBuilder();
+            text.AppendLine(lineParser.Text);
+
+            while (lineParser.Parse())
+            {
+                if (lineParser.Type == LineType.INDENTED_TEXT)
+                {
+                    text.AppendLine(lineParser.Text);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return text.ToString();
         }
 
         private ListSection ParseListSection(int level)
@@ -195,13 +218,14 @@ namespace Mdoc.Parsers
                 {
                     break;
                 }
-                string caption = lineParser.Text;
+                TextElement[] caption = ParseText(lineParser.Text, lineParser.LineCount);
 
                 lineParser.Parse();
 
-                ParagraphSection paragraph = ParseParagraph();
+                TextElement[] indentedText = ParseText(
+                        ParseIndentedText(), lineParser.LineCount);
 
-                items.Add(new DefinitionItemSection(ParseText(caption, lineParser.LineCount), paragraph.Text));
+                items.Add(new DefinitionItemSection(caption, indentedText));
 
                 if (SkipEmptyLine() == false)
                 {
@@ -219,7 +243,7 @@ namespace Mdoc.Parsers
 
             while (lineParser.Parse())
             {
-                if (lineParser.Type == LineType.CODE)
+                if (lineParser.Type == LineType.INDENTED_TEXT)
                 {
                     text.AppendLine(lineParser.Text);
                 }

@@ -15,7 +15,7 @@ namespace Mdoc.Parsers
         LIST_ITEM,
         ORDER_LIST_ITEM,
         DEFINITION_ITEM,
-        CODE,
+        INDENTED_TEXT,
         QUOTE,
         CONTENTS,
         CONTENTS_ALL
@@ -140,7 +140,7 @@ namespace Mdoc.Parsers
                             return true;
                         }
                     }
-                    if (ParseCode(line))
+                    if (ParseIndentedText(line))
                     {
                         return true;
                     }
@@ -272,7 +272,7 @@ namespace Mdoc.Parsers
             return false;
         }
 
-        private bool ParseCode(string line)
+        private bool ParseIndentedText(string line)
         {
             int i = 0;
             if ((i + 1 <= line.Length && line[i] == '\t'))
@@ -287,7 +287,7 @@ namespace Mdoc.Parsers
             else
                 return false;
 
-            this.Type = LineType.CODE;
+            this.Type = LineType.INDENTED_TEXT;
             this.Text = line.Substring(i);
 
             return true;

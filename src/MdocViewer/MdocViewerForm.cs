@@ -71,7 +71,7 @@ namespace MdocViewer
 
         private void browser_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            this.Text = browser.DocumentTitle;
+            this.Text = "Mdoc Viewer [" + browser.DocumentTitle + "]";
 
             SetFormMode();
         }
