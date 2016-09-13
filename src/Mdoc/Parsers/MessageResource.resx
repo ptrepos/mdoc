@@ -141,4 +141,10 @@
   <data name="UriHyperlinkError" xml:space="preserve">
     <value>インライン要素エラー: ハイパーリンク'[['が閉じられていません。</value>
   </data>
+  <data name="UrlCheckJavascript" xml:space="preserve">
+    <value>URLスキーマ'javascript:'は使用できません。</value>
+  </data>
+  <data name="UrlCheckVbScript" xml:space="preserve">
+    <value>URLスキーマ'vbscript:'は使用できません。</value>
+  </data>
 </root>

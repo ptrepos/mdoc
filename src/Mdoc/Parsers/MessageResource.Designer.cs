@@ -131,5 +131,23 @@ namespace Mdoc.Parsers {
                 return ResourceManager.GetString("UriHyperlinkError", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   URLスキーマ&apos;javascript:&apos;は使用できません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UrlCheckJavascript {
+            get {
+                return ResourceManager.GetString("UrlCheckJavascript", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   URLスキーマ&apos;vbscript:&apos;は使用できません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UrlCheckVbScript {
+            get {
+                return ResourceManager.GetString("UrlCheckVbScript", resourceCulture);
+            }
+        }
     }
 }

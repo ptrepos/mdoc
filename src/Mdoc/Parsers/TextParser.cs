@@ -307,6 +307,8 @@ namespace Mdoc.Parsers
                     if (Match(text, index + 1, ']'))
                     {
                         string url = context.ToString();
+                        CheckURL(url);
+
                         index += 2;
                         return new HyperlinkSpan(url, url, null);
                     }
@@ -360,7 +362,10 @@ namespace Mdoc.Parsers
                             {
                                 index++;
 
-                                return new HyperlinkSpan(context.ToString(), href.ToString(), null);
+                                string _href = href.ToString();
+                                CheckURL(_href);
+
+                                return new HyperlinkSpan(context.ToString(), _href, null);
                             }
                             else if (text[index] == '\\')
                             {
@@ -400,7 +405,7 @@ namespace Mdoc.Parsers
             throw new MdocParseException(MessageResource.HyperlinkError, line);
         }
 
-        ImageSpan ParseImage(string text, ref int index)
+        private ImageSpan ParseImage(string text, ref int index)
         {
             StringBuilder context = new StringBuilder();
             StringBuilder href = new StringBuilder();
@@ -428,7 +433,10 @@ namespace Mdoc.Parsers
                             {
                                 index++;
 
-                                return new ImageSpan(context.ToString(), href.ToString(), null);
+                                string _href = href.ToString();
+                                CheckURL(_href);
+
+                                return new ImageSpan(context.ToString(), _href, null);
                             }
                             else if (text[index] == '\\')
                             {
@@ -466,6 +474,18 @@ namespace Mdoc.Parsers
             }
 
             throw new MdocParseException(MessageResource.HyperlinkError, line);
+        }
+
+        private void CheckURL(string url)
+        {
+            if (url.StartsWith("javascript:"))
+            {
+                throw new MdocParseException(MessageResource.UrlCheckJavascript, line);
+            }
+            if (url.StartsWith("vbscript:"))
+            {
+                throw new MdocParseException(MessageResource.UrlCheckVbScript, line);
+            }
         }
     }
 }
