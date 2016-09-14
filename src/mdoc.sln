@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MdocConv", "MdocConv\MdocCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MdocViewer", "MdocViewer\MdocViewer.csproj", "{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MdocSetup", "MdocSetup\MdocSetup.vdproj", "{14EAAE08-1F02-4B24-BD49-978F08FD9D3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,13 @@ Global
 		{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}.Release|x64.Build.0 = Release|Any CPU
 		{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}.Release|x86.ActiveCfg = Release|Any CPU
 		{8DB8A4C0-DF8E-4EF6-99ED-89F6236F5A86}.Release|x86.Build.0 = Release|Any CPU
+		{14EAAE08-1F02-4B24-BD49-978F08FD9D3E}.Debug|Any CPU.ActiveCfg = Debug
+		{14EAAE08-1F02-4B24-BD49-978F08FD9D3E}.Debug|Any CPU.Build.0 = Debug
+		{14EAAE08-1F02-4B24-BD49-978F08FD9D3E}.Debug|x64.ActiveCfg = Debug
+		{14EAAE08-1F02-4B24-BD49-978F08FD9D3E}.Debug|x86.ActiveCfg = Debug
+		{14EAAE08-1F02-4B24-BD49-978F08FD9D3E}.Release|Any CPU.ActiveCfg = Release
+		{14EAAE08-1F02-4B24-BD49-978F08FD9D3E}.Release|x64.ActiveCfg = Release
+		{14EAAE08-1F02-4B24-BD49-978F08FD9D3E}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
