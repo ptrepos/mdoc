@@ -129,14 +129,29 @@
   <data name="EmphasisError" xml:space="preserve">
     <value>インライン要素エラー: 強調表示'*'が閉じられていません。</value>
   </data>
+  <data name="HtmlDelError" xml:space="preserve">
+    <value>インライン要素エラー: 取り消し線表示'&lt;del&gt;'が閉じられていません。</value>
+  </data>
+  <data name="HtmlEmError" xml:space="preserve">
+    <value>インライン要素エラー: 強調表示'&lt;em&gt;'が閉じられていません。</value>
+  </data>
+  <data name="HtmlSmallError" xml:space="preserve">
+    <value>インライン要素エラー: 細目表示'&lt;small&gt;'が閉じられていません。</value>
+  </data>
+  <data name="HtmlStrongError" xml:space="preserve">
+    <value>インライン要素エラー: 強い強調表示'&lt;strong&gt;'が閉じられていません。</value>
+  </data>
+  <data name="HtmlSubError" xml:space="preserve">
+    <value>インライン要素エラー: 下付き文字表示'&lt;sub&gt;'が閉じられていません。</value>
+  </data>
+  <data name="HtmlSupError" xml:space="preserve">
+    <value>インライン要素エラー: 上付き文字表示'&lt;sup&gt;'が閉じられていません。</value>
+  </data>
   <data name="HyperlinkError" xml:space="preserve">
     <value>インライン要素エラー: ハイパーリンク'['のフォーマットが違います。</value>
   </data>
   <data name="InlineCodeError" xml:space="preserve">
     <value>インライン要素エラー: コード表示'`'が閉じられていません。</value>
-  </data>
-  <data name="StrikethroughError" xml:space="preserve">
-    <value>インライン要素エラー: 取り消し線表示'~~'が閉じられていません。</value>
   </data>
   <data name="UriHyperlinkError" xml:space="preserve">
     <value>インライン要素エラー: ハイパーリンク'[['が閉じられていません。</value>

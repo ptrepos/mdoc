@@ -97,6 +97,60 @@ namespace Mdoc.Parsers {
         }
         
         /// <summary>
+        ///   インライン要素エラー: 取り消し線表示&apos;&lt;del&gt;&apos;が閉じられていません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string HtmlDelError {
+            get {
+                return ResourceManager.GetString("HtmlDelError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   インライン要素エラー: 強調表示&apos;&lt;em&gt;&apos;が閉じられていません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string HtmlEmError {
+            get {
+                return ResourceManager.GetString("HtmlEmError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   インライン要素エラー: 細目表示&apos;&lt;small&gt;&apos;が閉じられていません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string HtmlSmallError {
+            get {
+                return ResourceManager.GetString("HtmlSmallError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   インライン要素エラー: 強い強調表示&apos;&lt;strong&gt;&apos;が閉じられていません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string HtmlStrongError {
+            get {
+                return ResourceManager.GetString("HtmlStrongError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   インライン要素エラー: 下付き文字表示&apos;&lt;sub&gt;&apos;が閉じられていません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string HtmlSubError {
+            get {
+                return ResourceManager.GetString("HtmlSubError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   インライン要素エラー: 上付き文字表示&apos;&lt;sup&gt;&apos;が閉じられていません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string HtmlSupError {
+            get {
+                return ResourceManager.GetString("HtmlSupError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   インライン要素エラー: ハイパーリンク&apos;[&apos;のフォーマットが違います。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string HyperlinkError {
@@ -111,15 +165,6 @@ namespace Mdoc.Parsers {
         internal static string InlineCodeError {
             get {
                 return ResourceManager.GetString("InlineCodeError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   インライン要素エラー: 取り消し線表示&apos;~~&apos;が閉じられていません。 に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string StrikethroughError {
-            get {
-                return ResourceManager.GetString("StrikethroughError", resourceCulture);
             }
         }
         

@@ -364,27 +364,27 @@ namespace Mdoc.Parsers
             }
             if (status == Status.HTML_DEL)
             {
-                throw new MdocParseException(MessageResource.StrikethroughError, line);
+                throw new MdocParseException(MessageResource.HtmlDelError, line);
             }
             if (status == Status.HTML_EM)
             {
-                throw new MdocParseException(MessageResource.StrikethroughError, line);
+                throw new MdocParseException(MessageResource.HtmlEmError, line);
             }
             if (status == Status.HTML_STRONG)
             {
-                throw new MdocParseException(MessageResource.StrikethroughError, line);
+                throw new MdocParseException(MessageResource.HtmlStrongError, line);
             }
             if (status == Status.HTML_SUP)
             {
-                throw new MdocParseException(MessageResource.StrikethroughError, line);
+                throw new MdocParseException(MessageResource.HtmlSupError, line);
             }
             if (status == Status.HTML_SUB)
             {
-                throw new MdocParseException(MessageResource.StrikethroughError, line);
+                throw new MdocParseException(MessageResource.HtmlSubError, line);
             }
             if (status == Status.HTML_SMALL)
             {
-                throw new MdocParseException(MessageResource.StrikethroughError, line);
+                throw new MdocParseException(MessageResource.HtmlSmallError, line);
             }
         }
 
