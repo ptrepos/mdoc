@@ -145,29 +145,53 @@ namespace Mdoc.Encoders
 
                     writer.Write(Escape(s.Text));
                 }
-                else if (i is EmphasisStartTag)
+                else if (i is EmphasisOpenTag)
                 {
                     writer.Write("<em>");
                 }
-                else if (i is EmphasisEndTag)
+                else if (i is EmphasisCloseTag)
                 {
                     writer.Write("</em>");
                 }
-                else if (i is BoldStartTag)
+                else if (i is StrongOpenTag)
                 {
                     writer.Write("<strong>");
                 }
-                else if (i is BoldEndTag)
+                else if (i is StrongCloseTag)
                 {
                     writer.Write("</strong>");
                 }
-                else if (i is StrikethroughStartTag)
+                else if (i is StrikethroughOpenTag)
                 {
                     writer.Write("<strike>");
                 }
-                else if (i is StrikethroughEndTag)
+                else if (i is StrikethroughCloseTag)
                 {
                     writer.Write("</strike>");
+                }
+                else if (i is SuperscriptOpenTag)
+                {
+                    writer.Write("<sup>");
+                }
+                else if (i is SuperscriptCloseTag)
+                {
+                    writer.Write("</sup>");
+                }
+                else if (i is SubscriptOpenTag)
+                {
+                    writer.Write("<sub>");
+                }
+                else if (i is SubscriptCloseTag)
+                {
+                    writer.Write("</sub>");
+                }
+                else if (i is SmallOpenTag)
+                {
+                    writer.Write("<small>");
+                }
+                else if (i is SmallCloseTag)
+                {
+                    writer.Write("</small>");
                 }
                 else if (i is HyperlinkSpan)
                 {

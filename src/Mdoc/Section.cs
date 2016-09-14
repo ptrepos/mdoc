@@ -147,26 +147,47 @@ namespace Mdoc
         }
     }
 
-    public class EmphasisStartTag : TextElement
+    public class EmphasisOpenTag : TextElement
     {
     }
 
-    public class EmphasisEndTag : TextElement
+    public class EmphasisCloseTag : TextElement
     {
     }
 
-    public class BoldStartTag : TextElement
+    public class StrongOpenTag : TextElement
     {
     }
 
-    public class BoldEndTag : TextElement
+    public class StrongCloseTag : TextElement
     {
     }
 
-    public class StrikethroughStartTag : TextElement
+    public class StrikethroughOpenTag : TextElement
     {
     }
-    public class StrikethroughEndTag : TextElement
+    public class StrikethroughCloseTag : TextElement
+    {
+    }
+
+    public class SuperscriptOpenTag : TextElement
+    {
+    }
+    public class SuperscriptCloseTag : TextElement
+    {
+    }
+
+    public class SubscriptOpenTag : TextElement
+    {
+    }
+    public class SubscriptCloseTag : TextElement
+    {
+    }
+
+    public class SmallOpenTag : TextElement
+    {
+    }
+    public class SmallCloseTag : TextElement
     {
     }
 
