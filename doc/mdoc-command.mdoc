@@ -1,0 +1,35 @@
+# mdoc command line reference
+
+## コマンド - MdocConv
+
+<strong>MdocConv</strong> \[<em>options</em>\] <em>filename</em>
+
+### 概要
+
+入力<em>filename</em>を読み取り、HTML形式へ変換します。
+入力形式はmdocファイルです。
+
+出力ファイル名、出力ディレクトリを指定するには
+--output-fileもしくは--output-dirオプションを指定します。
+どちらも指定されなかった場合は、
+入力ファイルと同じディレクトリに出力されます。
+
+### コマンドラインオプション
+
+: --ccs=<em>ccs file name</em>
+	スタイルシートへのパスを設定するオプションです。
+
+: --type=<em>type</em>
+	出力形式を設定するオプションです。
+	"html"のみがサポートされます。
+
+: --output-dir=<em>output directory path</em>
+	出力ディレクトリを設定するオプションです。
+	ファイル名は指定した入力ファイルから自動で生成されます。
+
+: --output-file=<em>output file name</em>
+	出力ファイル名を指定するオプションです。
+
+### mdocファイルについて
+
+mdoc形式の文法の詳細は<em>"mdoc-syntax.mdoc"</em>をご参照ください。
