@@ -1,3 +1,8 @@
+body 
+{
+	font-family: helvetica, arial, 'hiragino kaku gothic pro', meiryo, 'ms pgothic', sans-serif;
+}
+
 .mdoc {
 	margin: 2em auto 2em auto;
 	width: 800px;

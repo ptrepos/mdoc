@@ -190,5 +190,23 @@ namespace MdocViewer
                 fileSaveWithoutHeaderMenuItem.Enabled = true;
             }
         }
+
+        private void browser_Navigating(object sender, WebBrowserNavigatingEventArgs e)
+        {
+            if (e.Url.LocalPath.EndsWith(".mdoc"))
+            {
+                LoadMdocFile(Path.Combine(Path.GetDirectoryName(mdocFile), e.Url.LocalPath));
+                e.Cancel = true;
+            }
+            if (!e.Url.LocalPath.Contains("."))
+            {
+                string path = Path.Combine(Path.GetDirectoryName(mdocFile), e.Url.LocalPath + ".mdoc");
+                if (File.Exists(path))
+                {
+                    LoadMdocFile(path);
+                    e.Cancel = true;
+                }
+            }
+        }
     }
 }
